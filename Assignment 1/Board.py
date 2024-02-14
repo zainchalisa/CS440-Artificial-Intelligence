@@ -72,11 +72,6 @@ class Board:
         print(self.board)
         
 
-
-
-       
-    
-
 board  = Board()
 grid = board.createBoard(15, 15)
 board.Astar(grid)
