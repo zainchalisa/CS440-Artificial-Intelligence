@@ -92,7 +92,7 @@ class Board:
                 r, c = row + dr, col + dc
 
                 if r == self.target[0] and c == self.target[1]:
-                    print(r, c)
+                    #print(r, c)
                     print("Path has been found")
                     found_destination = True
                     self.parent_dict[(r, c)] = ((row, col), gValue)
