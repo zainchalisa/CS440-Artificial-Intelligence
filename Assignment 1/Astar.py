@@ -2,6 +2,7 @@ import numpy
 import random
 import heapq
 import pygame
+import time
 
 class Board:
     def __init__(self, rows, cols):
@@ -181,15 +182,75 @@ class Board:
         else:
             print('no path found')
             return None
-            
+        
+
+    def forward_v_backwards(self, grid, start_point, end_point) -> float:
+
+        openList = []
+        heapq.heapify(openList)
+        closedList = set()
+        parent_dict = {}
+
+        start_time = time.time()
+        
+        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        found_destination = False
+
+        heapq.heappush(openList, (self.calculateHeuristic(start_point[0], start_point[1]), 0, self.calculateHeuristic(start_point[0], start_point[1]) * -1, start_point[0], start_point[1], -1, -1))
+
+        while openList and not found_destination:
+            #print(self.openList)
+            fValue, gValue, _, childRow, childCol, parentRow, parentCol = heapq.heappop(openList)
+            closedList.add((childRow, childCol))
+            if (childRow, childCol) not in parent_dict.keys():
+                parent_dict[(childRow, childCol)] = (parentRow, parentCol)
+            #print(f'F Value: {fValue},  G Value: {gValue}, Row: {childRow}, Col: {childCol}')
+
+            for dr, dc in directions:
+                r, c = childRow + dr, childCol + dc
+                if r == end_point[0] and c == end_point[1]:
+                    #print(r, c)
+                    print("Path has been found")
+                    found_destination = True
+                    parent_dict[(r, c)] = (childRow, childCol)
+                    break
+
+                elif r in range(self.rows) and c in range(self.cols) and self.board[r][c] != 1 and (r, c) not in closedList:
+                    hVal = self.calculateHeuristic(r, c)
+                    fVal = hVal + (gValue + 1) 
+                    heapq.heappush(openList, (fVal, gValue + 1, hVal, r, c, childRow, childCol))
+
+        print(self.board)
+
+        if found_destination:
+            path = [(end_point[0], end_point[1])]
+            current_cell = (end_point[0], end_point[1])
+
+            while current_cell != (-1, -1):
+                current_cell = parent_dict[current_cell]
+                path.append(current_cell)
+            path.reverse()
+            #print(path)
+        else:
+            print('no path found')          
+        
+        
+        end_time = time.time()
+
+        return (end_time - start_time)
         
     
     
     def run_visualization(self):
-        self.createBoard()
-        path = board.ForwardAStar_WithSmallerG(grid)
+        #path = board.ForwardAStar_WithSmallerG(grid)
+        
         #print(path)
 
+        forward_time = board.forward_v_backwards(grid, self.initial, self.target)
+        print(f'Forward Search: {forward_time}')
+        backward_time = board.forward_v_backwards(grid, self.target, self.initial)
+        print(f'Backwards Search: {backward_time}')
+'''
         if path is None:
             self.show_popup("No path found!")
         else:
@@ -212,8 +273,10 @@ class Board:
                 self.clock.tick(30)
 
             pygame.quit()
+'''
+        
 
-board = Board(50, 50)
+board = Board(10, 10)
 grid = board.createBoard()
 #path = board.ForwardAStar_WithSmallerG(grid)
 #print(path)
