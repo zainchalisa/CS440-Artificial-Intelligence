@@ -40,7 +40,7 @@ class Board:
     def calculateHeuristic(self, i, j):
         distance = abs(self.target[0] - i) + abs(self.target[1] - j)
         return distance
-
+    
     def draw_grid(self, path):
         
         cell_width = self.screen_width // self.cols
@@ -54,134 +54,175 @@ class Board:
         if path != None:
             for i in range(len(path)):
                color = (255, 165, 0)
-               #pygame.draw.rect(self.screen, color, (path[i][1] * cell_width, path[i][0] * cell_height, cell_width, cell_height))
-        
+               pygame.draw.rect(self.screen, color, (path[i][1] * cell_width, path[i][0] * cell_height, cell_width, cell_height))
+
         # Draw initial position
         pygame.draw.rect(self.screen, (0, 255, 0), (self.initial[1] * cell_width, self.initial[0] * cell_height, cell_width, cell_height))
         # Draw target position
         pygame.draw.rect(self.screen, (255, 0, 0), (self.target[1] * cell_width, self.target[0] * cell_height, cell_width, cell_height))
-    
-    def ForwardAStar_WithBiggerG(self, grid) -> list:
-        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
-        found_destination = False
 
-        heapq.heappush(self.openList, (self.calculateHeuristic(self.initial[0], self.initial[1]), 0, self.calculateHeuristic(self.initial[0], self.initial[1]), self.initial[0], self.initial[1]))
+    def show_popup(self, message):
+        popup_width = 300
+        popup_height = 100
+        popup_screen = pygame.display.set_mode((popup_width, popup_height))
+        pygame.display.set_caption("Popup Message")
 
-        while self.openList and not found_destination:
-            #print(self.openList)
-            fValue, gValue, _, row, col, = heapq.heappop(self.openList)
-            self.closedList.add((row, col))
-            #print(fValue, gValue)
+        font = pygame.font.Font(None, 36)
+        text = font.render(message, True, (0, 0, 0))
+        text_rect = text.get_rect(center=(popup_width // 2, popup_height // 2))
 
-            for dr, dc in directions:
-                r, c = row + dr, col + dc
+        popup_screen.fill((255, 255, 255))
+        popup_screen.blit(text, text_rect)
 
-                if r == self.target[0] and c == self.target[1]:
-                    #print(r, c)
-                    print("Path has been found")
-                    found_destination = True
-                    self.parent_dict[(r, c)] = ((row, col), gValue)
-                    break
+        pygame.display.flip()
 
-                elif r in range(self.rows) and c in range(self.cols) and self.board[r][c] != 1 and (r, c) not in self.closedList:
-                    hVal = self.calculateHeuristic(r, c)
-                    fVal = hVal - gValue
-                    heapq.heappush(self.openList, (fVal, gValue + 1, hVal, r, c))
-                    self.parent_dict[(r, c)] = ((row, col), gValue + 1)
-
-        print(self.board)
-        #print(self.parent_dict)
-
-        if found_destination:
-            path = [(self.target[0], self.target[1])]
-            current_cell = (self.target[0], self.target[1])
-
-            while current_cell != self.initial:
-                current_cell, _ = self.parent_dict[current_cell]
-                path.append(current_cell)
-
-            path.reverse()
-            return path
-            print(path)
-        else:
-            return None
-            print('no path found')
-        
-
-    def ForwardAStar_WithSmallerG(self, grid) -> list:
-        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
-        found_destination = False
-
-        heapq.heappush(self.openList, (self.calculateHeuristic(self.initial[0], self.initial[1]), 0, self.calculateHeuristic(self.initial[0], self.initial[1]) * -1, self.initial[0], self.initial[1]))
-
-        while self.openList and not found_destination:
-            #print(self.openList)
-            fValue, gValue, _, row, col, = heapq.heappop(self.openList)
-            self.closedList.add((row, col))
-            #print(fValue, gValue)
-
-            for dr, dc in directions:
-                r, c = row + dr, col + dc
-
-                if r == self.target[0] and c == self.target[1]:
-                    #print(r, c)
-                    print("Path has been found")
-                    found_destination = True
-                    self.parent_dict[(r, c)] = ((row, col), gValue)
-                    break
-
-                elif r in range(self.rows) and c in range(self.cols) and self.board[r][c] != 1 and (r, c) not in self.closedList:
-                    hVal = self.calculateHeuristic(r, c)
-                    fVal = hVal - gValue
-                    heapq.heappush(self.openList, (fVal, gValue - 1, hVal, r, c))
-                    self.parent_dict[(r, c)] = ((row, col), gValue - 1)
-
-        #print(self.board)
-        #print(self.parent_dict)
-
-        if found_destination:
-            path = [(self.target[0], self.target[1])]
-            current_cell = (self.target[0], self.target[1])
-
-            while current_cell != self.initial:
-                current_cell, _ = self.parent_dict[current_cell]
-                path.append(current_cell)
-
-            path.reverse()
-            return path
-            print(path)
-        else:
-            return None
-            print('no path found')
-        
-    
-    
-    def run_visualization(self):
-        self.createBoard()
-        path = board.ForwardAStar_WithBiggerG(grid)
-        print(path)
         running = True
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
 
-            # Clear the screen
-            self.screen.fill((255, 255, 255))
-
-            # Draw the grid
-            self.draw_grid(path)
-
-            # Update the display
-            pygame.display.flip()
-
-            # Limit frame rate
-            self.clock.tick(30)
-
         pygame.quit()
+    
+    def ForwardAStar_WithBiggerG(self, grid) -> list:
+        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        found_destination = False
 
-board = Board(5, 5)
+        heapq.heappush(self.openList, (self.calculateHeuristic(self.initial[0], self.initial[1]), 0, self.calculateHeuristic(self.initial[0], self.initial[1]) * -1, self.initial[0], self.initial[1], -1, -1))
+
+        while self.openList and not found_destination:
+            #print(self.openList)
+            fValue, gValue, _, childRow, childCol, parentRow, parentCol = heapq.heappop(self.openList)
+            self.closedList.add((childRow, childCol))
+            if (childRow, childCol) not in self.parent_dict.keys():
+                self.parent_dict[(childRow, childCol)] = (parentRow, parentCol)
+
+            #print(f'Heap: F Value: {fValue},  G Value: {gValue}, Row: {childRow}, Col: {childCol}')
+            #print(f'Parent Dictionary: {self.parent_dict}')
+            for dr, dc in directions:
+                r, c = childRow + dr, childCol + dc
+
+                if r == self.target[0] and c == self.target[1]:
+                    #print(r, c)
+                    print("Path has been found")
+                    found_destination = True
+                    self.parent_dict[(r, c)] = (childRow, childCol)
+                    break
+
+                elif r in range(self.rows) and c in range(self.cols) and self.board[r][c] != 1 and (r, c) not in self.closedList:
+                    hVal = self.calculateHeuristic(r, c)
+                    fVal = hVal - (gValue - 1)
+                    heapq.heappush(self.openList, (fVal, gValue -1, hVal, r, c, childRow, childCol))
+                    
+
+        print(self.board)
+        #print(self.closedList)
+
+        if found_destination:
+            path = [(self.target[0], self.target[1])]
+            current_cell = (self.target[0], self.target[1])
+
+            while current_cell != (-1, -1):
+                print(f'Current Cell: {current_cell}')
+                current_cell = self.parent_dict[current_cell]
+                path.append(current_cell)
+
+            path.reverse()
+            print(path)
+            return path
+            
+        else:
+            print('no path found')
+            return None
+        
+
+    def ForwardAStar_WithSmallerG(self, grid) -> list:
+        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        found_destination = False
+
+        heapq.heappush(self.openList, (self.calculateHeuristic(self.initial[0], self.initial[1]), 0, self.calculateHeuristic(self.initial[0], self.initial[1]) * -1, self.initial[0], self.initial[1], -1, -1))
+
+        while self.openList and not found_destination:
+            #print(self.openList)
+            fValue, gValue, _, childRow, childCol, parentRow, parentCol = heapq.heappop(self.openList)
+            self.closedList.add((childRow, childCol))
+            if (childRow, childCol) not in self.parent_dict.keys():
+                self.parent_dict[(childRow, childCol)] = (parentRow, parentCol)
+            #print(f'F Value: {fValue},  G Value: {gValue}, Row: {childRow}, Col: {childCol}')
+
+            for dr, dc in directions:
+                r, c = childRow + dr, childCol + dc
+                if r == self.target[0] and c == self.target[1]:
+                    #print(r, c)
+                    print("Path has been found")
+                    found_destination = True
+                    self.parent_dict[(r, c)] = (childRow, childCol)
+                    break
+
+                elif r in range(self.rows) and c in range(self.cols) and self.board[r][c] != 1 and (r, c) not in self.closedList:
+                    hVal = self.calculateHeuristic(r, c)
+                    fVal = hVal + (gValue + 1) 
+                    heapq.heappush(self.openList, (fVal, gValue + 1, hVal, r, c, childRow, childCol))
+
+        print(self.board)
+
+        if found_destination:
+            path = [(self.target[0], self.target[1])]
+            current_cell = (self.target[0], self.target[1])
+
+            while current_cell != (-1, -1):
+                current_cell = self.parent_dict[current_cell]
+                path.append(current_cell)
+
+            path.reverse()
+            #print(path)
+            return path
+            
+        else:
+            print('no path found')
+            return None
+            
+        
+    
+    
+    def run_visualization(self):
+        self.createBoard()
+        path = board.ForwardAStar_WithSmallerG(grid)
+        #print(path)
+
+        if path is None:
+            self.show_popup("No path found!")
+        else:
+            running = True
+            while running:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+
+                # Clear the screen
+                self.screen.fill((255, 255, 255))
+
+                # Draw the grid
+                self.draw_grid(path)
+
+                # Update the display
+                pygame.display.flip()
+
+                # Limit frame rate
+                self.clock.tick(30)
+
+            pygame.quit()
+
+board = Board(50, 50)
 grid = board.createBoard()
-path = board.ForwardAStar_WithBiggerG(grid)
+#path = board.ForwardAStar_WithSmallerG(grid)
 #print(path)
 board.run_visualization()
+
+
+
+'''
+- Backwards Astar
+- Adaptive A*
+- Implement on 50 diff grids
+'''
