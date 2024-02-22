@@ -168,10 +168,10 @@ class Board:
                 nr, nc = r + dr, c + dc
 
                 if nr in range(self.rows) and nc in range(self.cols) and self.board[nr][nc] == 1:
-                    self.planning_board[nr][nc] == 1
+                    self.planning_board[nr][nc] = 1
 
             if self.board[r][c] == 1:
-                self.planning_board[r][c] == 1
+                self.planning_board[r][c] = 1
                 print(f"Parent Dict Before: {self.parent_dict}")
                 current_cell = (self.target[0], self.target[1])
                 while current_cell != tuple(self.agent):
@@ -180,7 +180,7 @@ class Board:
                     current_cell = self.parent_dict[current_cell]
                     self.parent_dict.pop(cell_to_be_popped)
                     self.closedList.pop(cell_to_be_popped)
-                    
+
                 print(f"Parent Dict Before: {self.parent_dict}")
                 print(self.agent)
                 path = self.ForwardAStar_WithBiggerG()
