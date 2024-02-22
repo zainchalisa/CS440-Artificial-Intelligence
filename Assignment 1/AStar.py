@@ -173,13 +173,14 @@ class Board:
             if self.board[r][c] == 1:
                 self.planning_board[r][c] = 1
                 print(f"Parent Dict Before: {self.parent_dict}")
+                print(f"Closed List: {self.closedList}")
                 current_cell = (self.target[0], self.target[1])
                 while current_cell != tuple(self.agent):
                     print("Trying to find a better path.")
                     cell_to_be_popped = current_cell
                     current_cell = self.parent_dict[current_cell]
                     self.parent_dict.pop(cell_to_be_popped)
-                    self.closedList.pop(cell_to_be_popped)
+                    #self.closedList.pop(cell_to_be_popped)
 
                 print(f"Parent Dict Before: {self.parent_dict}")
                 print(self.agent)
@@ -240,7 +241,7 @@ class Board:
 
         
 
-board = Board(10, 10)
+board = Board(20, 20)
 board.createBoard()
 board.run_visualization()
 
