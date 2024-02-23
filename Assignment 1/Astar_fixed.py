@@ -8,6 +8,7 @@ class Board:
     def __init__(self, rows, cols):
         self.parent_dict = {}
         self.final_path = []
+        self.found = False
         self.rows = rows
         self.cols = cols
         self.target = (random.randint(0, self.rows - 1), random.randint(0, self.cols - 1))
@@ -96,30 +97,31 @@ class Board:
         pygame.quit()
     
     def ForwardAStar_WithBiggerG(self) -> list:
-        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
         self.openList = []
         heapq.heapify(self.openList)
         found_destination = False
-
+        if self.agent[0] != self.initial[0] or self.agent[1] != self.initial[1]: 
+            h_val = self.h_matrix[self.agent[0]][self.agent[1]]
+            g_val = self.closedList[(self.agent[0], self.agent[1])]
+            f_val = h_val - g_val 
+            parentRow, parentCol = self.parent_dict[(self.agent[0], self.agent[1])]
+            heapq.heappush(self.openList, (f_val, g_val, h_val, self.agent[0], self.agent[1], parentRow, parentCol))
+        
+        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        self.closedList = {}
 
         # First execution of planning
         if self.agent[0] == self.initial[0] and self.agent[1] == self.initial[1]: 
-            heapq.heappush(self.openList, (self.h_matrix[self.agent[0]][self.agent[1]], 0, self.calculateHeuristic(self.initial[0], self.initial[1]) * -1, self.initial[0], self.initial[1], -1, -1))
+            heapq.heappush(self.openList, (self.h_matrix[self.agent[0]][self.agent[1]], 0, self.calculateHeuristic(self.initial[0], self.initial[1]), self.initial[0], self.initial[1], -1, -1))
         
         # Agent is somewhere else besides initial cell
-        else:
-            h_val = self.h_matrix[self.agent[0]][self.agent[1]]
-            g_val = self.closedList[(self.agent[0], self.agent[1])]
-            f_val = h_val + g_val 
-            parentRow, parentCol = self.parent_dict[(self.agent[0], self.agent[1])]
-            heapq.heappush(self.openList, (f_val, g_val, h_val, self.agent[0], self.agent[1], parentRow, parentCol))
+        
 
         while self.openList and not found_destination:
-            #print(self.openList)
+            #print(f'Open List: {self.openList}')
             fValue, gValue, _, childRow, childCol, parentRow, parentCol = heapq.heappop(self.openList)
             self.closedList[(childRow, childCol)] = gValue
-            if (childRow, childCol) not in self.parent_dict.keys():
-                self.parent_dict[(childRow, childCol)] = (parentRow, parentCol)
+            self.parent_dict[(childRow, childCol)] = (parentRow, parentCol)
 
             #print(f'Heap: F Value: {fValue},  G Value: {gValue}, Row: {childRow}, Col: {childCol}')
             #print(f'Parent Dictionary: {self.parent_dict}')
@@ -144,63 +146,76 @@ class Board:
         #print(self.closedList)
 
         if found_destination:
-            path = [(self.target[0], self.target[1])]
+            self.path = [(self.target[0], self.target[1])]
             current_cell = (self.target[0], self.target[1])
-
+            #print(f"Parent Dict: {self.parent_dict}")
+            #print(f'Agent: {self.agent}')
             while current_cell != tuple(self.agent):
-                print(f'Current Cell: {current_cell}')
+                #print(f'Current Cell: {current_cell}')
                 current_cell = self.parent_dict[current_cell]
-                path.append(current_cell)
+                self.path.append(current_cell)
 
-            path.reverse()
-            print(path)
-            self.execution(path)
+            self.path.reverse()
+            #print(f'Before Execution: {self.path}')
+            self.execution(self.path)
             
         else:
             print('no path found')
             return None
 
     def execution(self, path):
-        
         directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
-        for (r, c) in path:
+        #print(f"Iterative Path {path}")
+        for (r, c) in self.path:
+
             for dr, dc in directions:
                 nr, nc = r + dr, c + dc
 
                 if nr in range(self.rows) and nc in range(self.cols) and self.board[nr][nc] == 1:
                     self.planning_board[nr][nc] = 1
 
+            if tuple((r,c)) == self.target:
+                print("Path has been found!")
+                self.found = True
+                print(self.final_path)
+                break
+            
             if self.board[r][c] == 1:
+                #print(f'Blocked Cell at RC: {[r, c]}')
                 self.planning_board[r][c] = 1
-                print(f"Parent Dict Before: {self.parent_dict}")
-                print(f"Closed List: {self.closedList}")
+                #print(f"Parent Dict Before: {self.parent_dict}")
+                #print(f"Closed List: {self.closedList}")
+                #print(f'Final Path List{self.final_path}')
                 current_cell = (self.target[0], self.target[1])
                 while current_cell != tuple(self.agent):
-                    print("Trying to find a better path.")
+                    #print("Trying to find a better path.")
+                    #print(f'Cell to be popped {current_cell}')
                     cell_to_be_popped = current_cell
                     current_cell = self.parent_dict[current_cell]
                     self.parent_dict.pop(cell_to_be_popped)
+                    #self.final_path.pop(cell_to_be_popped)
                     #self.closedList.pop(cell_to_be_popped)
 
-                print(f"Parent Dict Before: {self.parent_dict}")
-                print(self.agent)
-                path = self.ForwardAStar_WithBiggerG()
-                if path is None:
-                    print('Path is cooked.')
+                #print(f"Parent Dict After: {self.parent_dict}")
+                #print(self.agent)
+                self.planning_board[self.agent[0]][self.agent[1]] = 5
+                #print(f'Planning Grid:\n {self.planning_board}')
+                #print(f'Execution Grid:\n {self.board}')
+                #print(f"Path Before {self.path}")
+                
+                self.path = self.ForwardAStar_WithBiggerG()
+                #print(f"Path totototo {self.path}")
+                if self.path is None:
+                    #print('Path is cooked.')
                     return 
                 break
-
-            self.agent = list((r, c))
+            self.agent = tuple((r, c))
             self.final_path.append((r, c))
-            if (r, c) == self.target:
-                return "Path has been found!"
+            #print(f"Path {path}")
+            #print(f"Agent is at yooyoyo {self.agent}")
+            
                 
-            
-            
-    
-
-            
-            
+                
 
 
     def run_visualization(self):
@@ -216,7 +231,7 @@ class Board:
         #backward_time = board.forward_v_backwards(grid, self.target, self.initial)
         #print(f'Backwards Search: {backward_time}')
        
-        if self.final_path is None:
+        if self.found is False:
             self.show_popup("No path found!")
         else:
             running = True
@@ -241,7 +256,7 @@ class Board:
 
         
 
-board = Board(20, 20)
+board = Board(101, 101)
 board.createBoard()
 board.run_visualization()
 
