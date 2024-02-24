@@ -252,15 +252,16 @@ class Board:
                 if (i, j) in self.closedList:
                    # print("updating heuristic value")
                     g_val = self.closedList[(i, j)]
-                    initial_val = self.closedList[tuple(self.agent)]
+                    initial_val = self.closedList[tuple(self.target)]
+                    #print(initial_val)
                     #print(f'H-Val Before: {self.h_matrix[i][j]}')
-                    new_h = (-1 * g_val ) - (initial_val * -1)
-                    if new_h < self.h_matrix[i][j]:
-                        self.h_matrix[i][j] = (-1 * g_val ) - (initial_val * -1)
+                    new_h = (initial_val * -1) - (-1 * g_val )
+                    self.h_matrix[i][j] = new_h
                     #print(f'H-Val After: {self.h_matrix[i][j]}')
                     #print(self.h_matrix)
                 else:
                     continue
+        #print(self.h_matrix)
     
     def BackwardAStar_WithBiggerG(self) -> list:
         self.openList = []
@@ -325,6 +326,7 @@ class Board:
             
             #print(self.path)
             #print(f'Before Execution: {self.path}')
+            self.expanded_nodes += len(self.closedList.keys())
             self.execution_backwards(self.path)
             
         else:
@@ -394,7 +396,9 @@ class Board:
 
             self.path.reverse()
             #print(self.closedList)
+            #print(self.h_matrix)
             self.update_heuristic()
+            #print(self.h_matrix)
             self.expanded_nodes += len(self.closedList.keys())
             self.execution_A(self.path)
             
@@ -635,19 +639,24 @@ class Board:
     def run_visualization(self):
     
         self.ForwardAStar_WithBiggerG()
-        print(f'Forward: {self.expanded_nodes}')
+        print(f'Forward with Bigger G: {self.expanded_nodes}')
 
         #print(len(adapt))
         self.reset_board()
         self.AdaptiveAStar_WithBiggerG()
         print(f'Adaptive: {self.expanded_nodes}')
 
-        #self.reset_board()
-        #self.ForwardAStar_WithSmallerG()
+        '''
+        self.reset_board()
+        self.ForwardAStar_WithSmallerG()
+        print(f'Forward with Smaller G: {self.expanded_nodes}')
         #smaller = self.final_path
         #print(len(self.final_path))
 
-      
+        self.reset_board()
+        self.BackwardAStar_WithBiggerG()
+        print(f'Backwards: {self.expanded_nodes}')
+        '''
         #self.BackwardAStar_WithBiggerG()
         #print(len(self.final_path))
         #backwards = self.final_path
@@ -687,7 +696,7 @@ class Board:
 
         
 
-board = Board(50, 50)
+board = Board(101, 101)
 board.createBoard()
 board.run_visualization()
 
