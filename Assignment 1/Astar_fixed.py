@@ -98,15 +98,17 @@ class Board:
         pygame.quit()
     
     def ForwardAStar_WithSmallerG(self) -> list:
+        #print(self.openList)
         self.openList = []
         heapq.heapify(self.openList)
         found_destination = False
         if self.agent[0] != self.initial[0] or self.agent[1] != self.initial[1]: 
             h_val = self.h_matrix[self.agent[0]][self.agent[1]]
             g_val = self.closedList[(self.agent[0], self.agent[1])]
-            f_val = h_val - g_val 
+            f_val = h_val + g_val 
             parentRow, parentCol = self.parent_dict[(self.agent[0], self.agent[1])]
-            heapq.heappush(self.openList, (f_val, g_val, h_val, self.agent[0], self.agent[1], parentRow, parentCol))
+            if (f_val, g_val, h_val, self.agent[0], self.agent[1], parentRow, parentCol) not in self.openList:
+                heapq.heappush(self.openList, (f_val, g_val, h_val, self.agent[0], self.agent[1], parentRow, parentCol))
         
         directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
         self.closedList = {}
@@ -140,7 +142,8 @@ class Board:
                 elif r in range(self.rows) and c in range(self.cols) and self.planning_board[r][c] != 1 and (r, c) not in self.closedList:
                     hVal = self.h_matrix[r][c]
                     fVal = hVal + (gValue + 1)
-                    heapq.heappush(self.openList, (fVal, gValue + 1, hVal, r, c, childRow, childCol))
+                    if (fVal, gValue + 1, hVal, r, c, childRow, childCol) not in self.openList:
+                        heapq.heappush(self.openList, (fVal, gValue + 1, hVal, r, c, childRow, childCol))
                     
 
         #print(self.planning_board)
@@ -274,7 +277,8 @@ class Board:
             #print(self.agent)
             #print(self.parent_dict)
             parentRow, parentCol = self.parent_dict[(self.target[0], self.target[1])]
-            heapq.heappush(self.openList, (f_val, g_val, h_val, self.target[0], self.target[1], parentRow, parentCol))
+            if (f_val, g_val, h_val, self.agent[0], self.agent[1], parentRow, parentCol) not in self.openList:
+                heapq.heappush(self.openList, (f_val, g_val, h_val, self.agent[0], self.agent[1], parentRow, parentCol))
         
         directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
         self.closedList = {}
@@ -287,12 +291,12 @@ class Board:
         
 
         while self.openList and not found_destination:
-            #print(f'Open List: {self.openList}')
+            print(f'Open List: {self.openList}')
             fValue, gValue, _, childRow, childCol, parentRow, parentCol = heapq.heappop(self.openList)
             self.closedList[(childRow, childCol)] = gValue
             self.parent_dict[(childRow, childCol)] = (parentRow, parentCol)
 
-            #print(f'Heap: F Value: {fValue},  G Value: {gValue}, Row: {childRow}, Col: {childCol}')
+            print(f'Heap: F Value: {fValue},  G Value: {gValue}, Row: {childRow}, Col: {childCol}')
             #print(f'Parent Dictionary: {self.parent_dict}')
             for dr, dc in directions:
                 r, c = childRow + dr, childCol + dc
@@ -308,7 +312,8 @@ class Board:
                 elif r in range(self.rows) and c in range(self.cols) and self.planning_board[r][c] != 1 and (r, c) not in self.closedList:
                     hVal = self.h_matrix[r][c]
                     fVal = hVal - (gValue - 1)
-                    heapq.heappush(self.openList, (fVal, gValue - 1, hVal, r, c, childRow, childCol))
+                    if (fVal, gValue - 1, hVal, r, c, childRow, childCol) not in self.openList:
+                        heapq.heappush(self.openList, (fVal, gValue - 1, hVal, r, c, childRow, childCol))
                     
 
         #print(self.planning_board)
@@ -405,7 +410,6 @@ class Board:
         else:
             print('no path found')
             return None
-
 
     def execution_backwards(self, path):
         #print(f'Print Execution \n {self.h_matrix}')
@@ -640,23 +644,25 @@ class Board:
     
         self.ForwardAStar_WithBiggerG()
         print(f'Forward with Bigger G: {self.expanded_nodes}')
+        print(f'Length of Path: {len(self.final_path)}')
 
         #print(len(adapt))
-        self.reset_board()
-        self.AdaptiveAStar_WithBiggerG()
-        print(f'Adaptive: {self.expanded_nodes}')
+        #self.reset_board()
+        #self.AdaptiveAStar_WithBiggerG()
+        #print(f'Adaptive: {self.expanded_nodes}')
 
-        '''
+        
         self.reset_board()
         self.ForwardAStar_WithSmallerG()
         print(f'Forward with Smaller G: {self.expanded_nodes}')
+        print(f'Length of Path: {len(self.final_path)}')
         #smaller = self.final_path
         #print(len(self.final_path))
 
-        self.reset_board()
-        self.BackwardAStar_WithBiggerG()
-        print(f'Backwards: {self.expanded_nodes}')
-        '''
+        #self.reset_board()
+        #self.BackwardAStar_WithBiggerG()
+        #print(f'Backwards: {self.expanded_nodes}')
+        
         #self.BackwardAStar_WithBiggerG()
         #print(len(self.final_path))
         #backwards = self.final_path
