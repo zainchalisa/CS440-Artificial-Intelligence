@@ -1,500 +1,700 @@
 Board 1 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2218
-- Length of Path: 205
+- Expanded Cells: 3697
+- Length of Path: 468
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 22520
-- Length of Path: 231
+- Expanded Cells: 14316
+- Length of Path: 372
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2199
-- Length of Path: 205
+- Expanded Cells: 2932
+- Length of Path: 392
+Repeated Backwards Astar:
+- Expanded Cells: 131550
+- Length of Path: 403
+
 Board 2 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2406
-- Length of Path: 263
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 47581
-- Length of Path: 225
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2331
-- Length of Path: 263
-Board 3 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2592
-- Length of Path: 247
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 27597
-- Length of Path: 199
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2200
-- Length of Path: 247
-Board 4 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2649
-- Length of Path: 195
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 49790
-- Length of Path: 413
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2647
-- Length of Path: 195
-Board 5 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2847
-- Length of Path: 325
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 19214
-- Length of Path: 240
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2812
-- Length of Path: 325
-Board 6 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2968
-- Length of Path: 271
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 35284
-- Length of Path: 255
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2949
-- Length of Path: 271
-Board 7 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 4580
-- Length of Path: 378
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 29986
-- Length of Path: 227
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 4467
-- Length of Path: 356
-Board 8 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2494
-- Length of Path: 258
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 46951
-- Length of Path: 258
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2508
-- Length of Path: 259
-Board 9 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2713
-- Length of Path: 262
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 32538
-- Length of Path: 253
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2688
-- Length of Path: 260
-Board 10 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 3003
-- Length of Path: 259
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 35656
-- Length of Path: 252
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2968
-- Length of Path: 251
-Board 11 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 1995
-- Length of Path: 178
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 38205
-- Length of Path: 192
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 1994
-- Length of Path: 178
-Board 12 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 4961
-- Length of Path: 441
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 30488
-- Length of Path: 331
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 4671
-- Length of Path: 428
-Board 13 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 3035
+- Expanded Cells: 2609
 - Length of Path: 282
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 33159
-- Length of Path: 210
+- Expanded Cells: 17991
+- Length of Path: 253
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2989
-- Length of Path: 268
-Board 14 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2314
-- Length of Path: 226
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 26536
-- Length of Path: 208
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2401
-- Length of Path: 227
-Board 15 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 3091
-- Length of Path: 268
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 42551
-- Length of Path: 243
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 3039
-- Length of Path: 262
-Board 16 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2721
-- Length of Path: 228
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 24795
-- Length of Path: 203
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2721
-- Length of Path: 228
-Board 17 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 4421
-- Length of Path: 324
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 65576
-- Length of Path: 292
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 4375
-- Length of Path: 322
-Board 18 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2907
-- Length of Path: 207
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 72801
-- Length of Path: 245
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2899
-- Length of Path: 207
-Board 19 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2399
-- Length of Path: 225
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 35980
-- Length of Path: 216
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2138
-- Length of Path: 199
-Board 20 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2104
-- Length of Path: 224
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 52894
-- Length of Path: 258
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2096
-- Length of Path: 224
-Board 21 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 4956
-- Length of Path: 311
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 46557
-- Length of Path: 234
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 4456
-- Length of Path: 288
-Board 22 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2050
-- Length of Path: 199
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 34114
-- Length of Path: 239
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2045
-- Length of Path: 199
-Board 23 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2648
-- Length of Path: 251
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 35126
+- Expanded Cells: 2468
 - Length of Path: 277
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2628
-- Length of Path: 247
-Board 24 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 6058
-- Length of Path: 543
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 35124
-- Length of Path: 252
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 4091
-- Length of Path: 341
-Board 25 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 4096
-- Length of Path: 344
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 35008
-- Length of Path: 243
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 4094
-- Length of Path: 335
-Board 26 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 6674
-- Length of Path: 487
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 52529
-- Length of Path: 260
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 3482
-- Length of Path: 245
-Board 27 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2531
-- Length of Path: 328
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 39507
-- Length of Path: 362
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2524
-- Length of Path: 307
-Board 28 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2414
-- Length of Path: 245
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 35607
+Repeated Backwards Astar:
+- Expanded Cells: 138037
 - Length of Path: 239
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2553
-- Length of Path: 222
-Board 29 Values:
+
+Board 3 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 869
-- Length of Path: 30
+- Expanded Cells: 2110
+- Length of Path: 372
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 20223
-- Length of Path: 19
+- Expanded Cells: 8832
+- Length of Path: 186
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 851
-- Length of Path: 24
-Board 30 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2412
-- Length of Path: 226
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 40399
+- Expanded Cells: 1945
+- Length of Path: 337
+Repeated Backwards Astar:
+- Expanded Cells: 67330
 - Length of Path: 208
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2453
-- Length of Path: 239
-Board 31 Values:
+
+Board 4 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2216
-- Length of Path: 245
+- Expanded Cells: 2468
+- Length of Path: 286
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 52581
-- Length of Path: 272
+- Expanded Cells: 6240
+- Length of Path: 225
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2190
-- Length of Path: 243
-Board 32 Values:
+- Expanded Cells: 2404
+- Length of Path: 284
+Repeated Backwards Astar:
+- Expanded Cells: 118899
+- Length of Path: 321
+
+Board 5 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2204
-- Length of Path: 189
+- Expanded Cells: 1771
+- Length of Path: 186
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 45074
-- Length of Path: 222
+- Expanded Cells: 5076
+- Length of Path: 123
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2198
-- Length of Path: 189
-Board 33 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 3551
-- Length of Path: 405
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 37608
-- Length of Path: 255
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 3691
-- Length of Path: 405
-Board 34 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2389
-- Length of Path: 315
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 43626
-- Length of Path: 350
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2290
-- Length of Path: 306
-Board 35 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2305
+- Expanded Cells: 1743
+- Length of Path: 182
+Repeated Backwards Astar:
+- Expanded Cells: 91892
 - Length of Path: 195
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 46646
-- Length of Path: 285
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2298
-- Length of Path: 195
-Board 36 Values:
+
+Board 6 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 3115
-- Length of Path: 274
+- Expanded Cells: 1742
+- Length of Path: 207
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 26261
-- Length of Path: 190
+- Expanded Cells: 5929
+- Length of Path: 251
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 3115
-- Length of Path: 262
-Board 37 Values:
+- Expanded Cells: 1714
+- Length of Path: 201
+Repeated Backwards Astar:
+- Expanded Cells: 67623
+- Length of Path: 271
+
+Board 7 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2362
-- Length of Path: 276
+- Expanded Cells: 1206
+- Length of Path: 163
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 31364
-- Length of Path: 220
+- Expanded Cells: 12494
+- Length of Path: 199
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2826
-- Length of Path: 324
-Board 38 Values:
+- Expanded Cells: 1190
+- Length of Path: 163
+Repeated Backwards Astar:
+- Expanded Cells: 101828
+- Length of Path: 204
+
+Board 8 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2350
-- Length of Path: 300
+- Expanded Cells: 3969
+- Length of Path: 340
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 39482
+- Expanded Cells: 31569
+- Length of Path: 280
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 3530
+- Length of Path: 273
+Repeated Backwards Astar:
+- Expanded Cells: 215739
+- Length of Path: 260
+
+Board 9 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1851
+- Length of Path: 179
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 5400
+- Length of Path: 174
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1840
+- Length of Path: 179
+Repeated Backwards Astar:
+- Expanded Cells: 106090
+- Length of Path: 198
+
+Board 10 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 2227
+- Length of Path: 250
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 9092
+- Length of Path: 221
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 2154
+- Length of Path: 238
+Repeated Backwards Astar:
+- Expanded Cells: 87804
+- Length of Path: 240
+
+Board 11 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1263
+- Length of Path: 143
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 14716
 - Length of Path: 235
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 3531
-- Length of Path: 356
-Board 39 Values:
+- Expanded Cells: 1261
+- Length of Path: 143
+Repeated Backwards Astar:
+- Expanded Cells: 143292
+- Length of Path: 242
+
+Board 12 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2654
-- Length of Path: 200
+- Expanded Cells: 2216
+- Length of Path: 244
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 33991
+- Expanded Cells: 12843
 - Length of Path: 247
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2639
-- Length of Path: 198
-Board 40 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2824
-- Length of Path: 212
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 47643
-- Length of Path: 200
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2815
-- Length of Path: 210
-Board 41 Values:
-Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 358
-- Length of Path: 7
-Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 13314
-- Length of Path: 8
-Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 357
-- Length of Path: 7
-Board 42 Values:
+- Expanded Cells: 2148
+- Length of Path: 238
+Repeated Backwards Astar:
+- Expanded Cells: 122184
+- Length of Path: 255
+
+Board 13 Values:
 Repeated Forward Astar - Larger G-Values:
 - Expanded Cells: 2764
-- Length of Path: 226
+- Length of Path: 254
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 49196
-- Length of Path: 245
+- Expanded Cells: 9349
+- Length of Path: 228
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2757
-- Length of Path: 224
-Board 43 Values:
+- Expanded Cells: 2855
+- Length of Path: 265
+Repeated Backwards Astar:
+- Expanded Cells: 83741
+- Length of Path: 211
+
+Board 14 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2047
-- Length of Path: 172
+- Expanded Cells: 1462
+- Length of Path: 191
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 58786
-- Length of Path: 373
+- Expanded Cells: 8675
+- Length of Path: 179
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2044
-- Length of Path: 172
-Board 44 Values:
+- Expanded Cells: 1414
+- Length of Path: 189
+Repeated Backwards Astar:
+- Expanded Cells: 77534
+- Length of Path: 177
+
+Board 15 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2830
+- Expanded Cells: 1119
+- Length of Path: 152
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 4012
+- Length of Path: 120
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1110
+- Length of Path: 144
+Repeated Backwards Astar:
+- Expanded Cells: 75512
+- Length of Path: 143
+
+Board 16 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 841
+- Length of Path: 124
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 6397
+- Length of Path: 159
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 841
+- Length of Path: 124
+Repeated Backwards Astar:
+- Expanded Cells: 71787
+- Length of Path: 179
+
+Board 17 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1134
+- Length of Path: 160
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 4444
+- Length of Path: 151
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1125
+- Length of Path: 160
+Repeated Backwards Astar:
+- Expanded Cells: 63629
+- Length of Path: 153
+
+Board 18 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 253
+- Length of Path: 7
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 4372
+- Length of Path: 8
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 253
+- Length of Path: 7
+Repeated Backwards Astar:
+- Expanded Cells: 24189
+- Length of Path: 8
+
+Board 19 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1533
+- Length of Path: 179
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 7242
+- Length of Path: 179
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1625
+- Length of Path: 187
+Repeated Backwards Astar:
+- Expanded Cells: 98343
 - Length of Path: 215
+
+Board 20 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 2099
+- Length of Path: 239
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 52541
+- Expanded Cells: 9709
+- Length of Path: 209
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 2071
+- Length of Path: 227
+Repeated Backwards Astar:
+- Expanded Cells: 116147
+- Length of Path: 221
+
+Board 21 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1037
+- Length of Path: 135
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 4966
+- Length of Path: 146
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1032
+- Length of Path: 135
+Repeated Backwards Astar:
+- Expanded Cells: 72063
+- Length of Path: 171
+
+Board 22 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1334
+- Length of Path: 214
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 11357
 - Length of Path: 230
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2826
-- Length of Path: 215
+- Expanded Cells: 1282
+- Length of Path: 214
+Repeated Backwards Astar:
+- Expanded Cells: 102704
+- Length of Path: 173
+
+Board 23 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 422
+- Length of Path: 15
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 4074
+- Length of Path: 14
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 417
+- Length of Path: 15
+Repeated Backwards Astar:
+- Expanded Cells: 30450
+- Length of Path: 15
+
+Board 24 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 2137
+- Length of Path: 270
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 7843
+- Length of Path: 264
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 2029
+- Length of Path: 267
+Repeated Backwards Astar:
+- Expanded Cells: 96735
+- Length of Path: 262
+
+Board 25 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1107
+- Length of Path: 161
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 11377
+- Length of Path: 187
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1033
+- Length of Path: 143
+Repeated Backwards Astar:
+- Expanded Cells: 72566
+- Length of Path: 178
+
+Board 26 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1179
+- Length of Path: 163
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 5080
+- Length of Path: 200
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1168
+- Length of Path: 159
+Repeated Backwards Astar:
+- Expanded Cells: 71659
+- Length of Path: 197
+
+Board 27 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1216
+- Length of Path: 145
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 7235
+- Length of Path: 185
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1208
+- Length of Path: 145
+Repeated Backwards Astar:
+- Expanded Cells: 84736
+- Length of Path: 207
+
+Board 28 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 2200
+- Length of Path: 278
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 20178
+- Length of Path: 318
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 2170
+- Length of Path: 274
+Repeated Backwards Astar:
+- Expanded Cells: 109199
+- Length of Path: 254
+
+Board 29 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1098
+- Length of Path: 128
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 3336
+- Length of Path: 107
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1094
+- Length of Path: 128
+Repeated Backwards Astar:
+- Expanded Cells: 61924
+- Length of Path: 117
+
+Board 30 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 2224
+- Length of Path: 249
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 11901
+- Length of Path: 288
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 2045
+- Length of Path: 245
+Repeated Backwards Astar:
+- Expanded Cells: 114271
+- Length of Path: 256
+
+Board 31 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 902
+- Length of Path: 154
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 7107
+- Length of Path: 175
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 880
+- Length of Path: 154
+Repeated Backwards Astar:
+- Expanded Cells: 68422
+- Length of Path: 187
+
+Board 32 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1782
+- Length of Path: 191
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 6072
+- Length of Path: 176
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1768
+- Length of Path: 191
+Repeated Backwards Astar:
+- Expanded Cells: 59673
+- Length of Path: 159
+
+Board 33 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1224
+- Length of Path: 153
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 6124
+- Length of Path: 175
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1219
+- Length of Path: 153
+Repeated Backwards Astar:
+- Expanded Cells: 64694
+- Length of Path: 168
+
+Board 34 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1971
+- Length of Path: 252
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 7062
+- Length of Path: 208
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1871
+- Length of Path: 236
+Repeated Backwards Astar:
+- Expanded Cells: 69624
+- Length of Path: 234
+
+Board 35 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 841
+- Length of Path: 156
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 7962
+- Length of Path: 181
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 835
+- Length of Path: 156
+Repeated Backwards Astar:
+- Expanded Cells: 67801
+- Length of Path: 181
+
+Board 36 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1461
+- Length of Path: 150
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 13849
+- Length of Path: 216
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1459
+- Length of Path: 150
+Repeated Backwards Astar:
+- Expanded Cells: 73223
+- Length of Path: 182
+
+Board 37 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1590
+- Length of Path: 200
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 7678
+- Length of Path: 201
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1561
+- Length of Path: 198
+Repeated Backwards Astar:
+- Expanded Cells: 67910
+- Length of Path: 166
+
+Board 38 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1898
+- Length of Path: 216
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 14374
+- Length of Path: 225
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1816
+- Length of Path: 203
+Repeated Backwards Astar:
+- Expanded Cells: 118205
+- Length of Path: 243
+
+Board 39 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1071
+- Length of Path: 150
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 8673
+- Length of Path: 234
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1066
+- Length of Path: 150
+Repeated Backwards Astar:
+- Expanded Cells: 64647
+- Length of Path: 167
+
+Board 40 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1531
+- Length of Path: 156
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 9848
+- Length of Path: 181
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1499
+- Length of Path: 154
+Repeated Backwards Astar:
+- Expanded Cells: 72807
+- Length of Path: 166
+
+Board 41 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1153
+- Length of Path: 188
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 7734
+- Length of Path: 236
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1145
+- Length of Path: 188
+Repeated Backwards Astar:
+- Expanded Cells: 68730
+- Length of Path: 171
+
+Board 42 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 2323
+- Length of Path: 241
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 6441
+- Length of Path: 163
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 2273
+- Length of Path: 235
+Repeated Backwards Astar:
+- Expanded Cells: 72415
+- Length of Path: 168
+
+Board 43 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1173
+- Length of Path: 133
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 4451
+- Length of Path: 115
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1170
+- Length of Path: 133
+Repeated Backwards Astar:
+- Expanded Cells: 82956
+- Length of Path: 173
+
+Board 44 Values:
+Repeated Forward Astar - Larger G-Values:
+- Expanded Cells: 1547
+- Length of Path: 207
+Repeated Forward Astar - Smaller G-Values:
+- Expanded Cells: 8212
+- Length of Path: 216
+Adaptive Forward Astar - Larger G-Values:
+- Expanded Cells: 1436
+- Length of Path: 204
+Repeated Backwards Astar:
+- Expanded Cells: 76462
+- Length of Path: 217
+
 Board 45 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2880
-- Length of Path: 260
+- Expanded Cells: 1108
+- Length of Path: 167
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 39847
-- Length of Path: 237
+- Expanded Cells: 11134
+- Length of Path: 292
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2861
-- Length of Path: 256
+- Expanded Cells: 1085
+- Length of Path: 167
+Repeated Backwards Astar:
+- Expanded Cells: 86568
+- Length of Path: 234
+
 Board 46 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2430
-- Length of Path: 228
+- Expanded Cells: 1475
+- Length of Path: 188
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 46286
-- Length of Path: 319
+- Expanded Cells: 13322
+- Length of Path: 315
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2427
-- Length of Path: 226
+- Expanded Cells: 1463
+- Length of Path: 188
+Repeated Backwards Astar:
+- Expanded Cells: 117076
+- Length of Path: 322
+
 Board 47 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 2876
-- Length of Path: 296
+- Expanded Cells: 1774
+- Length of Path: 168
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 46591
-- Length of Path: 241
+- Expanded Cells: 8043
+- Length of Path: 168
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 2850
-- Length of Path: 286
+- Expanded Cells: 1766
+- Length of Path: 166
+Repeated Backwards Astar:
+- Expanded Cells: 82401
+- Length of Path: 171
+
 Board 48 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 3086
-- Length of Path: 276
+- Expanded Cells: 821
+- Length of Path: 116
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 45525
-- Length of Path: 323
+- Expanded Cells: 9771
+- Length of Path: 140
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 3040
-- Length of Path: 274
+- Expanded Cells: 821
+- Length of Path: 116
+Repeated Backwards Astar:
+- Expanded Cells: 75021
+- Length of Path: 145
+
 Board 49 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 4245
-- Length of Path: 437
+- Expanded Cells: 1440
+- Length of Path: 168
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 50210
-- Length of Path: 367
+- Expanded Cells: 8229
+- Length of Path: 142
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 3989
-- Length of Path: 415
+- Expanded Cells: 1432
+- Length of Path: 168
+Repeated Backwards Astar:
+- Expanded Cells: 92120
+- Length of Path: 172
+
 Board 50 Values:
 Repeated Forward Astar - Larger G-Values:
-- Expanded Cells: 1970
-- Length of Path: 213
+- Expanded Cells: 4196
+- Length of Path: 451
 Repeated Forward Astar - Smaller G-Values:
-- Expanded Cells: 37736
-- Length of Path: 207
+- Expanded Cells: 17094
+- Length of Path: 414
 Adaptive Forward Astar - Larger G-Values:
-- Expanded Cells: 1997
-- Length of Path: 214
+- Expanded Cells: 4393
+- Length of Path: 431
+Repeated Backwards Astar:
+- Expanded Cells: 189427
+- Length of Path: 560
+
