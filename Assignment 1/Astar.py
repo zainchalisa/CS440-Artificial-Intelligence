@@ -279,6 +279,76 @@ class Board:
                     continue
         #print(self.h_matrix)
     
+    def backwards(self):
+        self.openList = []
+        heapq.heapify(self.openList)
+        found_destination = False
+        if self.agent[0] != self.initial[0] or self.agent[1] != self.initial[1]: 
+            h_val = self.h_matrix[self.target[0]][self.target[1]]
+            g_val = self.closedList[(self.target[0], self.target[1])]
+            f_val = h_val - g_val 
+            self.parent_dict[(self.target[0], self.target[1])] = (-1, -1)
+            parentRow, parentCol = self.parent_dict[(self.target[0], self.target[1])]
+            heapq.heappush(self.openList, (f_val, g_val, h_val, self.target[0], self.target[1], parentRow, parentCol))
+        
+        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        self.closedList = {}
+
+        # First execution of planning
+        if self.agent[0] == self.initial[0] and self.agent[1] == self.initial[1]: 
+            heapq.heappush(self.openList, (self.h_matrix[self.target[0]][self.target[1]], 0, self.calculateHeuristic(self.target[0], self.target[1]), self.target[0], self.target[1], -1, -1))
+        
+        # Agent is somewhere else besides initial cell
+        
+
+        while self.openList and not found_destination:
+            #print(f'Open List: {self.openList}')
+            fValue, gValue, _, childRow, childCol, parentRow, parentCol = heapq.heappop(self.openList)
+            self.closedList[(childRow, childCol)] = gValue
+            self.parent_dict[(childRow, childCol)] = (parentRow, parentCol)
+
+            #print(f'Heap: F Value: {fValue},  G Value: {gValue}, Row: {childRow}, Col: {childCol}')
+            #print(f'Parent Dictionary: {self.parent_dict}')
+            for dr, dc in directions:
+                r, c = childRow + dr, childCol + dc
+
+                if r == self.agent[0] and c == self.agent[1]:
+                    #print(r, c)
+                    print("Path has been found")
+                    found_destination = True
+                    self.parent_dict[(r, c)] = (childRow, childCol)
+                    self.closedList[(r, c)] = gValue - 1
+                    break
+
+                elif r in range(self.rows) and c in range(self.cols) and self.planning_board[r][c] != 1 and (r, c) not in self.closedList:
+                    hVal = self.h_matrix[r][c]
+                    fVal = hVal - (gValue - 1)
+                    if (fVal, gValue - 1, hVal, r, c, childRow, childCol) not in self.openList:
+                        heapq.heappush(self.openList, (fVal, gValue - 1, hVal, r, c, childRow, childCol))
+                    
+
+        #print(self.planning_board)
+        #print(self.closedList)
+
+        if found_destination:
+            self.path = [(self.agent[0], self.agent[1])]
+            current_cell = (self.agent[0], self.agent[1])
+            #print(f"Parent Dict: {self.parent_dict}")
+            #print(f'Agent: {self.agent}')
+            while current_cell != self.target:
+                #print(f'Current Cell: {current_cell}')
+                current_cell = self.parent_dict[current_cell]
+                self.path.append(current_cell)
+
+            
+            #print(f'Before Execution: {self.path}')
+            self.expanded_nodes += len(self.closedList.keys())
+            self.execution_backwards(self.path)
+            
+        else:
+            print('no path found')
+            return None
+        
     def BackwardAStar_WithBiggerG(self) -> list:
         self.openList = []
         heapq.heapify(self.openList)
@@ -326,8 +396,7 @@ class Board:
                 elif r in range(self.rows) and c in range(self.cols) and self.planning_board[r][c] != 1 and (r, c) not in self.closedList:
                     hVal = self.h_matrix[r][c]
                     fVal = hVal - (gValue - 1)
-                    if (fVal, gValue - 1, hVal, r, c, childRow, childCol) not in self.openList:
-                        heapq.heappush(self.openList, (fVal, gValue - 1, hVal, r, c, childRow, childCol))
+                    heapq.heappush(self.openList, (fVal, gValue - 1, hVal, r, c, childRow, childCol))
                     
 
         #print(self.planning_board)
@@ -469,7 +538,7 @@ class Board:
                 #print(f'Planning Grid:\n {self.planning_board}')
                 #print(f'Execution Grid:\n {self.board}')
                 #print(f"Path Before {self.path}")
-                #self.draw_grid(self.final_path, wait_for_click=True)
+                self.draw_grid(self.final_path, wait_for_click=True)
                 self.path = self.ForwardAStar_WithBiggerG()
                 #print(f"Path totototo {self.path}")
                 if self.path is None:
@@ -526,7 +595,7 @@ class Board:
                 #print(f'Planning Grid:\n {self.planning_board}')
                 #print(f'Execution Grid:\n {self.board}')
                 #print(f"Path Before {self.path}")
-                
+                self.draw_grid(self.final_path, wait_for_click=True)
                 self.path = self.ForwardAStar_WithSmallerG()
                 #print(f"Path totototo {self.path}")
                 if self.path is None:
@@ -583,7 +652,7 @@ class Board:
                 #print(f'Planning Grid:\n {self.planning_board}')
                 #print(f'Execution Grid:\n {self.board}')
                 #print(f"Path Before {self.path}")
-                
+                self.draw_grid(self.final_path, wait_for_click=True)
                 self.path = self.AdaptiveAStar_WithBiggerG()
                 #print(f"Path totototo {self.path}")
                 if self.path is None:
@@ -621,7 +690,7 @@ class Board:
                 #print(f"Parent Dict Before: {self.parent_dict}")
                 #print(f"Closed List: {self.closedList}")
                 #print(f'Final Path List{self.final_path}')
-                current_cell = (self.agent[0], self.agent[1])
+                #current_cell = (self.agent[0], self.agent[1])
                 #while current_cell != tuple(self.target):
                     #print("Trying to find a better path.")
                     #print(f'Cell to be popped {current_cell}')
@@ -637,15 +706,14 @@ class Board:
                 #print(f"Parent Dict After: {self.parent_dict}")
                 #print(self.agent)
                 self.parent_dict = {}
-                self.planning_board[self.agent[0]][self.agent[1]] = 5
                 #print(f'Planning Grid:\n {self.planning_board}')
                 #print(f'Execution Grid:\n {self.board}')
                 #print(f"Path Before {self.path}")
                 
-                self.path = self.BackwardAStar_WithBiggerG()
+                self.path = self.backwards()
                 #print(f"Path totototo {self.path}")
                 if self.path is None:
-                    #print('Path is cooked.')
+                    print('Path is cooked.')
                     return 
                 break
             self.agent = tuple((r, c))   
@@ -656,8 +724,9 @@ class Board:
 
 
     def run_visualization(self):
-
+        
         with open('results.txt', 'a') as f:
+            
             for i in range(1, 51):
                 grid = self.createBoard()
                 f.write(f"Board {i} Values:\n")
@@ -676,13 +745,13 @@ class Board:
                 f.write("- Expanded Cells: {}\n".format(self.expanded_nodes))
                 f.write("- Length of Path: {}\n".format(len(self.final_path)))
                 self.reset_board()
-                #self.BackwardAStar_WithBiggerG()
+                #self.back()
                 #f.write("Repeated Backwards Astar:\n")
                 #f.write("- Expanded Cells: {}\n".format(self.expanded_nodes))
                 #f.write("- Length of Path: {}\n".format(self.len(self.final_path)))
                 #f.write("\n")
-                
         
+        '''
         #self.ForwardAStar_WithBiggerG()
         #print(f'Forward with Bigger G: {self.expanded_nodes}')
         #print(f'Length of Path: {len(self.final_path)}')
@@ -693,44 +762,52 @@ class Board:
         #print(f'Length of Path: {len(self.final_path)}')
 
         #self.reset_board()
-        '''
-        self.BackwardAStar_WithBiggerG()
-        print(f'Forward with Bigger G: {self.expanded_nodes}')
-        print(f'Length of Path: {len(self.final_path)}')
-        backwards = self.final_path
+        #board.createBoard()
 
+        #self.ForwardAStar_WithBiggerG()
+        #self.ForwardAStar_WithSmallerG()
+        #self.AdaptiveAStar_WithBiggerG()
+        self.backwards()
+        print(f'Expanded Cells: {self.expanded_nodes}')
+        print(f'Length of Path: {len(self.final_path)}')
+        
         if self.found is False:
             self.show_popup("No path exists!")
         else:
+            # Clear the screen
+            self.screen.fill((255, 255, 255))
+
+            # Draw the initial grid
+            self.draw_grid(self.final_path)
+
+            # Update the display
+            pygame.display.flip()
+
             running = True
             while running:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         running = False
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        # Clear the screen
+                        self.screen.fill((255, 255, 255))
 
-                # Clear the screen
-                self.screen.fill((255, 255, 255))
+                        # Draw the final path
+                        self.draw_grid(self.final_path, wait_for_click=True)
 
-                # Draw the final path without waiting for a click
-                self.draw_grid(backwards)
-
-                # Update the display
-                pygame.display.flip()
+                        # Update the display
+                        pygame.display.flip()
 
                 # Limit frame rate
                 self.clock.tick(30)
 
-                # Wait for a click event
-                for event in pygame.event.get():
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        running = True
-
             pygame.quit()
-            '''
+        
+           '''
             
 
 board = Board(101, 101)
-#board.createBoard()
+grid = board.createBoard()
 board.run_visualization()
 
 
