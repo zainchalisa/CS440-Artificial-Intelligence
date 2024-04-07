@@ -59,7 +59,7 @@ class Board:
 
         for i in range(self.rows):
             for j in range(self.cols):
-                color = (255, 255, 255) if self.board[i][j] == 0 else (0, 0, 0)  # White for unblocked, black for blocked
+                color = (255, 255, 255) if self.planning_board[i][j] == 0 else (0, 0, 0)  # White for unblocked, black for blocked
                 pygame.draw.rect(self.screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
 
         if path != None:
@@ -204,8 +204,9 @@ class Board:
             while current_cell != tuple(self.agent):
                 current_cell = self.parent_dict[current_cell]
                 self.path.append(current_cell)
-
+            
             self.path.reverse()
+            self.draw_grid(self.path, wait_for_click=True)
             self.expanded_nodes += len(self.closedList.keys())
             self.execution_B(self.path)
             
@@ -374,7 +375,7 @@ class Board:
                 self.path = self.ForwardAStar_WithBiggerG()
                 
                 if self.path is None:
-                    print('Path does not exist.')
+                    #print('Path does not exist.')
                     return 
                 break
             self.agent = tuple((r, c))   
@@ -408,7 +409,7 @@ class Board:
                 self.draw_grid(self.final_path, wait_for_click=True)
                 self.path = self.ForwardAStar_WithSmallerG()
                 if self.path is None:
-                    print('Path does not exist.')
+                    #print('Path does not exist.')
                     return 
                 break
             self.agent = tuple((r, c))   
@@ -441,7 +442,7 @@ class Board:
                 self.draw_grid(self.final_path, wait_for_click=True)
                 self.path = self.AdaptiveAStar_WithBiggerG()
                 if self.path is None:
-                    print('Path does not exist.')
+                    #print('Path does not exist.')
                     return 
                 break
             self.agent = tuple((r, c))   
@@ -469,7 +470,7 @@ class Board:
                 self.draw_grid(self.final_path, wait_for_click=True)
                 self.path = self.BackwardAStar_WithBiggerG()
                 if self.path is None:
-                    print('Path does not exist.')
+                    #print('Path does not exist.')
                     return 
                 break
             self.agent = tuple((r, c))   
@@ -506,6 +507,38 @@ class Board:
                 f.write("- Length of Path: {}\n".format(len(self.final_path)))
                 f.write("\n")
                 self.reset_board()
+        '''
+
+        '''
+        with open('example.txt', 'a') as f:
+            
+            
+            grid = self.createBoard()
+            self.ForwardAStar_WithBiggerG()
+            print("ForwardAStar_WithBiggerG")
+            f.write("Repeated Forward Astar - Larger G-Values:\n")
+            f.write("- Expanded Cells: {}\n".format(self.expanded_nodes))
+            f.write("- Length of Path: {}\n".format(len(self.final_path)))
+            self.reset_board()
+            self.ForwardAStar_WithSmallerG()
+            print("ForwardAStar_WithSmallerG")
+            f.write("Repeated Forward Astar - Smaller G-Values:\n")
+            f.write("- Expanded Cells: {}\n".format(self.expanded_nodes))
+            f.write("- Length of Path: {}\n".format(len(self.final_path)))
+            self.reset_board()
+            self.AdaptiveAStar_WithBiggerG()
+            print("AdaptiveAStar_WithBiggerG")
+            f.write("Adaptive Forward Astar - Larger G-Values:\n")
+            f.write("- Expanded Cells: {}\n".format(self.expanded_nodes))
+            f.write("- Length of Path: {}\n".format(len(self.final_path)))
+            self.reset_board()
+            self.BackwardAStar_WithBiggerG()
+            print("BackwardsAStar_WithBiggerG")
+            f.write("Repeated Backwards Astar:\n")
+            f.write("- Expanded Cells: {}\n".format(self.expanded_nodes))
+            f.write("- Length of Path: {}\n".format(len(self.final_path)))
+            f.write("\n")
+            self.reset_board()
         '''
 
         self.ForwardAStar_WithBiggerG()
@@ -546,6 +579,6 @@ class Board:
 
             pygame.quit()
         
-board = Board(101, 101)
+board = Board(50, 50)
 grid = board.createBoard()
 board.run_visualization()
