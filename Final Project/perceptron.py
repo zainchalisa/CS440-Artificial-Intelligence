@@ -8,6 +8,8 @@
 
 import util
 import numpy as np
+import zipfile
+import os
 
 ## Constants
 DATUM_WIDTH = 0 # in pixels
@@ -42,30 +44,32 @@ class Perceptron:
     return self.pixels    
       
 # Data processing, cleanup and display functions  
-def loadDataFile(filename, n,width,height):
-  """
-  Reads n data images from a file and returns a list of Datum objects.
-  
-  (Return less then n items if the end of file is encountered).
-  """
-  DATUM_WIDTH=width
-  DATUM_HEIGHT=height
-  fin = readlines(filename)
-  fin.reverse()
-  items = []
-  for i in range(n):
-    data = []
-    for j in range(height):
-      data.append(list(fin.pop()))
-    if len(data[0]) < DATUM_WIDTH-1:
-      # we encountered end of file...
-      print ("Truncating at %d examples (maximum)" % i)
-      break
-    items.append(Perceptron(data,DATUM_WIDTH,DATUM_HEIGHT))
-  return items
+def loadDataFile(filename, n, width, height):
+    """
+    Reads n data images from a file and returns a list of Datum objects.
+    
+    (Return less than n items if the end of file is encountered).
+    """
+    DATUM_WIDTH = width
+    DATUM_HEIGHT = height
+    fin = readlines(filename)
+    fin.reverse()
+    items = []
+    for i in range(n):
+        data = []
+        for j in range(height):
+            # Read a line from the file
+            line = fin.pop()
+            # Convert symbols to 0s and 1s
+            data.append(list(map(convertToInteger, line)))
+        if len(data[0]) < DATUM_WIDTH - 1:
+            # We encountered the end of the file
+            print("Truncating at %d examples (maximum)" % i)
+            break
+        items.append(Perceptron(data, DATUM_WIDTH, DATUM_HEIGHT))
+    return items
 
-import zipfile
-import os
+
 def readlines(filename):
   "Opens a file or reads it from the zip archive data.zip"
   if(os.path.exists(filename)): 
@@ -108,6 +112,17 @@ def convertToInteger(data):
 
 # function used to train the data and get the final weights which will be used on the actual data  
 def train():
+  n = 10
+  data = loadDataFile('data/facedata/facedatatest', n, 60, 70)
+  labels = loadLabelsFile('data/facedata/facedatalabels', n)
+   
+  for i in range(n):
+    #check matrix to see the values, check the weight matrix to see the scores, get the final score
+    # check the label, if the label is accurate to the score continue, if the label is innacurate run the weight update method
+    # continue to go through all the data samples until completed repeating this process
+
+# check the accuracy of the model after the training
+def test_model():
   pass
 
 
@@ -115,12 +130,12 @@ def train():
 def _test():
   import doctest
   doctest.testmod() # Test the interactive sessions in function comments
-  n = 1
+  n = 2
   items = loadDataFile("data/facedata/facedatatrain", n,60,70)
   labels = loadLabelsFile("data/facedata/facedatatrainlabels", n)
 #  items = loadDataFile("data/digitdata/trainingimages", n,28,28)
 #  labels = loadLabelsFile("data/digitdata/traininglabels", n)
-  for i in range(1):
+  for i in range(n):
     print (items[i])
     print (labels[i])
     print (items[i].height)
