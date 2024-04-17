@@ -15,7 +15,6 @@ import os
 DATUM_WIDTH_FACE = 0 # in pixels
 DATUM_HEIGHT = 0 # in pixels
 
-
 class Perceptron:
  
   def __init__(self, data,width,height):
@@ -26,7 +25,6 @@ class Perceptron:
     DATUM_WIDTH=width
     self.height = DATUM_HEIGHT
     self.width = DATUM_WIDTH
-    self.weights = np.random.uniform(low=-1e9, high=1e9, size=(self.height, self.width))# randomly assigned array of n * k values from - infinity to postive infinity
     if data == None:
       data = [[' ' for i in range(DATUM_WIDTH)] for j in range(DATUM_HEIGHT)] 
     self.pixels = data
@@ -55,6 +53,7 @@ def loadDataFile(filename, n, width, height):
     fin = readlines(filename)
     fin.reverse()
     items = []
+    count = 0
     for i in range(n):
         data = []
         for j in range(height):
@@ -69,6 +68,8 @@ def loadDataFile(filename, n, width, height):
             print("Truncating at %d examples (maximum)" % i)
             break
         items.append(Perceptron(data, DATUM_WIDTH, DATUM_HEIGHT))
+        count = + 1
+    print(count)
     return items
 
 
@@ -114,17 +115,50 @@ def convertToInteger(data):
 
 # function used to train the data and get the final weights which will be used on the actual data  
 def train_face(n):
-  data = loadDataFile('data/facedata/facedatatest', n, 60, 70)
-  labels = loadLabelsFile('data/facedata/facedatalabels', n)
 
   epochs = 10
-   
-  for i in range(n):
-    pass    
+  data = loadDataFile('data/facedata/facedatatrain', 451, 60, 70)
+  labels = loadLabelsFile('data/facedata/facedatatrainlabels', 451)
+  weights = np.random.uniform(low=-1e9, high=1e9, size=(70, 60))
+  num_samples = int(n * 451)
 
-    #check matrix to see the values, check the weight matrix to see the scores, get the final score
-    # check the label, if the label is accurate to the score continue, if the label is innacurate run the weight update method
-    # continue to go through all the data samples until completed repeating this process
+  accuracies = []
+  
+   
+  for epoch in range(epochs):
+    num_accurate = 0
+    for _ in range(num_samples):
+
+      idx = np.random.randint(0, 451)
+      sample = data[idx]
+      
+      total_sum = 0
+  
+
+      for i in range(70):
+        for j in range(60):
+          total_sum += sample.getPixel(i, j) * weights[i][j] 
+
+      label = labels[idx]
+
+
+      if total_sum > 0 and label == 0:
+        for i in range(70):
+          for j in range(60):
+            weights[i][j] += weights[i][j] - sample.getPixel(i, j) 
+        
+      # Predicted output is not a face, but actual output is a face
+      elif total_sum < 0 and label == 1:
+        for i in range(70):
+          for j in range(60):
+            weights[i][j] += weights[i][j] + sample.getPixel(i, j) 
+      else:
+        num_accurate += 1
+    
+    percentage_accurate = num_accurate / num_samples
+    accuracies.append(percentage_accurate)        
+
+  return np.average(accuracies), np.std(accuracies)
 
 # check the accuracy of the model after the training
 def test_model():
@@ -133,17 +167,7 @@ def test_model():
 
 # Testing
 def _test():
-  import doctest
-  doctest.testmod() # Test the interactive sessions in function comments
-  n = 2
-  items = loadDataFile("data/facedata/facedatatrain", n,60,70)
-  labels = loadLabelsFile("data/facedata/facedatatrainlabels", n)
-#  items = loadDataFile("data/digitdata/trainingimages", n,28,28)
-#  labels = loadLabelsFile("data/digitdata/traininglabels", n)
-  for i in range(n):
-    print (items[i])
-    print (labels[i])
-    print (items[i].getPixels())
-
+  average, std = train_face(0.8)
+  print(average, std)
 if __name__ == "__main__":
   _test()  
