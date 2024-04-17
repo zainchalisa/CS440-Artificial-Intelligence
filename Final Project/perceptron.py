@@ -29,7 +29,7 @@ class Perceptron:
     self.weights = np.random.uniform(low=-1e9, high=1e9, size=(self.height, self.width))# randomly assigned array of n * k values from - infinity to postive infinity
     if data == None:
       data = [[' ' for i in range(DATUM_WIDTH)] for j in range(DATUM_HEIGHT)] 
-    self.pixels = util.arrayInvert(convertToInteger(data)) 
+    self.pixels = data
     
   def getPixel(self, column, row):
     """
@@ -61,8 +61,8 @@ def loadDataFile(filename, n, width, height):
             # Read a line from the file
             line = fin.pop()
             # Convert symbols to 0s and 1s
-            print(line)
-            print(list(map(convertToInteger, line)))
+            #print(line)
+            #print(list(map(convertToInteger, line)))
             data.append(list(map(convertToInteger, line)))
         if len(data[0]) < DATUM_WIDTH - 1:
             # We encountered the end of the file
