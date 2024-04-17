@@ -12,7 +12,7 @@ import zipfile
 import os
 
 ## Constants
-DATUM_WIDTH = 0 # in pixels
+DATUM_WIDTH_FACE = 0 # in pixels
 DATUM_HEIGHT = 0 # in pixels
 
 
@@ -61,6 +61,8 @@ def loadDataFile(filename, n, width, height):
             # Read a line from the file
             line = fin.pop()
             # Convert symbols to 0s and 1s
+            print(line)
+            print(list(map(convertToInteger, line)))
             data.append(list(map(convertToInteger, line)))
         if len(data[0]) < DATUM_WIDTH - 1:
             # We encountered the end of the file
@@ -111,12 +113,15 @@ def convertToInteger(data):
     return map(convertToInteger, data)
 
 # function used to train the data and get the final weights which will be used on the actual data  
-def train():
-  n = 10
+def train_face(n):
   data = loadDataFile('data/facedata/facedatatest', n, 60, 70)
   labels = loadLabelsFile('data/facedata/facedatalabels', n)
+
+  epochs = 10
    
   for i in range(n):
+    pass    
+
     #check matrix to see the values, check the weight matrix to see the scores, get the final score
     # check the label, if the label is accurate to the score continue, if the label is innacurate run the weight update method
     # continue to go through all the data samples until completed repeating this process
@@ -138,9 +143,6 @@ def _test():
   for i in range(n):
     print (items[i])
     print (labels[i])
-    print (items[i].height)
-    print (items[i].width)
-    print (dir(items[i]))
     print (items[i].getPixels())
 
 if __name__ == "__main__":
