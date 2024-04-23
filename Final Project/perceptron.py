@@ -120,13 +120,14 @@ def train_face(n):
   epochs = 10
   data = loadDataFile('data/facedata/facedatatrain', 451, 60, 70)
   labels = loadLabelsFile('data/facedata/facedatatrainlabels', 451)
-  weights = np.random.randint(low= -1e9, high= 1e9, size=(70, 60))
+  weights = np.random.randint(low= -400, high= 400, size=(70, 60))
   num_samples = int(n * 451)
 
   accuracies = []
 
-  bias = 1
-   
+  bias = np.random.randint(low = -200, high = 200)
+
+ 
   for epoch in range(epochs):
     for _ in range(num_samples):
 
@@ -137,7 +138,7 @@ def train_face(n):
 
       for i in range(70):
         for j in range(60):
-          total_sum += sample.getPixel(i, j) * weights[i][j] 
+          total_sum += sample.getPixel(i, j) + weights[i][j] 
 
       label = labels[idx]
 
@@ -145,27 +146,26 @@ def train_face(n):
         bias -= 1
         for i in range(70):
           for j in range(60):
-            weights[i][j] += weights[i][j] - sample.getPixel(i, j) 
+            weights[i][j] = weights[i][j] - sample.getPixel(i, j) 
         
       # Predicted output is not a face, but actual output is a face
       elif total_sum < 0 and label == 1:
         bias += 1
         for i in range(70):
           for j in range(60):
-            weights[i][j] += weights[i][j] + sample.getPixel(i, j) 
+            weights[i][j] =  weights[i][j] + sample.getPixel(i, j) 
 
-  ################### END OF TRAINING MODEL CODE ###################            
+  ############## END OF TRAINING MODEL CODE FOR FACE ###################            
       
   # now test the test data to see how accurate it is    
   data_test = loadDataFile('data/facedata/facedatatest', 150, 60, 70)
   labels_test = loadLabelsFile('data/facedata/facedatatestlabels', 150)
-
+  
   for idx in range(150):
 
     sample = data_test[idx]
     label = labels_test[idx]
     total_sum = 0
-
 
     for i in range(70):
       for j in range(60):
@@ -174,9 +174,9 @@ def train_face(n):
 
     total_sum += bias
 
-    #print(total_sum)
-    if (total_sum > 0 and label == 1) or (total_sum < 0 and label == 0):
-      #print('here')
+    if (total_sum > 0 and label == 1):
+      accuracies.append(1)
+    elif (total_sum < 0 and label == 0):
       accuracies.append(1)
     else:
       accuracies.append(0)
@@ -189,12 +189,12 @@ def train_digit(n):
   epochs = 20
   data = loadDataFile('data/digitdata/trainingimages', 5000, 28, 28)
   labels = loadLabelsFile('data/digitdata/traininglabels', 5000)
-  weights = np.random.uniform(low=-1e9, high=1e9, size=(10, 28, 28))
+  weights = np.random.randint(low=-400, high=400, size=(10, 28, 28))
   num_samples = int(n * 5000)
 
   accuracies = []
 
-  bias = np.random.uniform(low=-1e9, high=1e9, size=10)
+  bias = np.random.randint(low=-200, high=200, size=10)
 
   for epoch in range(epochs):
     num_accurate = 0
@@ -235,12 +235,43 @@ def train_digit(n):
           for j in range(28):
             weights[predicted_digit][i][j] = weights[predicted_digit][i][j] - image.getPixel(i, j)
             weights[real_digit][i][j] =  weights[real_digit][i][j] + image.getPixel(i, j)
-        #print('weights updated')
-      else:
-        num_accurate += 1
 
-    percentage_accurate = num_accurate / num_samples
-    accuracies.append(percentage_accurate)  
+  ############## END OF TRAINING MODEL CODE FOR DIGIT ################### 
+
+  # now test the test data to see how accurate it is    
+  data_test = loadDataFile('data/digitdata/testimages', 1000, 28, 28)
+  labels_test = loadLabelsFile('data/digitdata/testlabels', 1000)
+  
+  for idx in range(1000):
+
+      image = data_test[idx]
+
+      predicted_digit = 0
+      max_sum = 0
+  
+      # the loop which we'll use to find out the predicited digit (this digit is the one with the highest total_sum)
+      for digit in range(0, 9):
+        total_sum = 0 
+        for i in range(28):
+          for j in range(28):
+            total_sum += image.getPixel(i, j) * weights[digit][i][j]
+        
+        # adds the bias value associated to the current digit to the total sum
+        total_sum += bias[digit]
+
+        # checks if we need to update the max_sum and predicted_digit
+        if total_sum > max_sum:
+          max_sum = total_sum
+          predicted_digit = digit
+
+      # gets the actual digit which the image represents 
+      real_digit = labels_test[idx]
+
+      if real_digit == predicted_digit:
+        accuracies.append(1)
+      else:
+        accuracies.append(0)
+     
 
   return np.average(accuracies), np.std(accuracies)  
 
@@ -252,7 +283,7 @@ def test_model():
 
 # Testing
 def _test():
-  average, std = train_face(.8)
+  average, std = train_digit(1)
   print(average, std)
 
 if __name__ == "__main__":
