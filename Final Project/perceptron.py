@@ -178,6 +178,7 @@ def train_face(n):
   #print(accuracies)
   return np.mean(accuracies), np.std(accuracies)
 
+
 def train_digit(n):
 
   epochs = 10
@@ -268,6 +269,7 @@ def train_digit(n):
      
 
   return np.average(accuracies), np.std(accuracies)  
+
 
 # Testing
 def _test():

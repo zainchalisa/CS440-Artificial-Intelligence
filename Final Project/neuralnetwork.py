@@ -112,8 +112,27 @@ def nn_face(n):
   epochs = 10
   data = loadDataFile('data/facedata/facedatatrain', 451, 60, 70)
   labels = loadLabelsFile('data/facedata/facedatatrainlabels', 451)
-  weights = np.random.randint(low= -400, high= 400, size=(70, 60)) # we need different weights for each of the 
+  weights = np.random.randint(low= -400, high= 400, size=(1000, 70, 60)) # we need different weights for each of the nodes on the hidden layer
+  biases = np.random.randint(low=-200, high=200, size=1000)
+  hidden_layer = [] 
   num_samples = int(n * 451)
+
+    # when creating the neural network we need the following:
+        # the input layer (this layer will be the individual pixels of the image)
+        # the hidden layer (this layer will use the sigmoid function g(Z) = (1/(1 + e^-2)))
+        # the output layer (this layer is computed using sigmoid of each of the values computed in the hidden layer)
+
+  for epoch in range(epochs):
+    for _ in num_samples:
+      
+      idx = np.random.randint(0, 451)
+      sample = data[idx]
+      
+      
+        
+
+
+
 
 def nn_digit(n):
   
@@ -122,6 +141,8 @@ def nn_digit(n):
   labels = loadLabelsFile('data/digitdata/traininglabels', 5000)
   weights = np.random.randint(low=-400, high=400, size=(10, 28, 28))
   num_samples = int(n * 5000)
+
+
 
 def _test():
   average, std = nn_digit(.5)
