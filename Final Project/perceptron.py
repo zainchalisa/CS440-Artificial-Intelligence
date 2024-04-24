@@ -1,10 +1,4 @@
-# samples.py
-# ----------
-# Licensing Information: Please do not distribute or publish solutions to this
-# project. You are free to use and extend these projects for educational
-# purposes. The Pacman AI projects were developed at UC Berkeley, primarily by
-# John DeNero (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
-# For more info, see http://inst.eecs.berkeley.edu/~cs188/sp09/pacman.html
+# samples.py from http://inst.eecs.berkeley.edu/~cs188/sp11/projects/classification/classification.html used for file reading
 
 import util
 import numpy as np
@@ -158,10 +152,10 @@ def train_face(n):
   ############## END OF TRAINING MODEL CODE FOR FACE ###################            
       
   # now test the test data to see how accurate it is    
-  data_test = loadDataFile('data/facedata/facedatatest', 150, 60, 70)
-  labels_test = loadLabelsFile('data/facedata/facedatatestlabels', 150)
+  data_test = loadDataFile('data/facedata/facedatavalidation', 301, 60, 70)
+  labels_test = loadLabelsFile('data/facedata/facedatavalidationlabels', 301)
   
-  for idx in range(150):
+  for idx in range(301):
 
     sample = data_test[idx]
     label = labels_test[idx]
@@ -186,7 +180,7 @@ def train_face(n):
 
 def train_digit(n):
 
-  epochs = 20
+  epochs = 10
   data = loadDataFile('data/digitdata/trainingimages', 5000, 28, 28)
   labels = loadLabelsFile('data/digitdata/traininglabels', 5000)
   weights = np.random.randint(low=-400, high=400, size=(10, 28, 28))
@@ -239,8 +233,8 @@ def train_digit(n):
   ############## END OF TRAINING MODEL CODE FOR DIGIT ################### 
 
   # now test the test data to see how accurate it is    
-  data_test = loadDataFile('data/digitdata/testimages', 1000, 28, 28)
-  labels_test = loadLabelsFile('data/digitdata/testlabels', 1000)
+  data_test = loadDataFile('data/digitdata/validationimages', 1000, 28, 28)
+  labels_test = loadLabelsFile('data/digitdata/validationlabels', 1000)
   
   for idx in range(1000):
 
@@ -274,12 +268,6 @@ def train_digit(n):
      
 
   return np.average(accuracies), np.std(accuracies)  
-
-
-# check the accuracy of the model after the training
-def test_model():
-  pass
-
 
 # Testing
 def _test():
