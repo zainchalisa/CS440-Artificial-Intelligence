@@ -120,6 +120,10 @@ def backprop(hidden_layer_weights, output_weights, actual, predicted):
 def softmax(z):
     e_z = np.exp(z - np.max(z))  
     return e_z / e_z.sum(axis=0)
+
+def loss(actual, predicted):
+   epsilon = 1e-15
+   return - (actual * np.log(predicted + epsilon) + (1 - actual) * np.log(1 - predicted + epsilon))
    
 
 def nn_face(n):
@@ -160,14 +164,18 @@ def nn_face(n):
       for i in range(len(hidden_layer_values)):
           final_output += output_weights[i] * hidden_layer_values[i]
 
-      face_probability = sigmoid_activation(final_output + output_bias)
+      predicted = sigmoid_activation(final_output + output_bias)
 
-      if face_probability > 0.5 and labels[idx] == 0:
-          pass
+      actual = labels[idx]
+
+      if predicted > 0.5 and actual == 0:
+          loss = loss(predicted, actual) # + regularization
           #backprop(output_weights, hidden_layer_)
-      elif face_probability < 0.5 and labels[idx] == 1:
           pass
+      elif predicted < 0.5 and actual == 1:
+          loss = loss(predicted, actual) # + regularization
           #backprop(weights)
+          pass
 
 
 
