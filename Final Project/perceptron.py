@@ -178,7 +178,7 @@ def train_face(n):
   #print(accuracies)
   return np.mean(accuracies), np.std(accuracies)
 
-
+# Move validation loop in epoch loop
 def train_digit(n):
 
   epochs = 10
@@ -192,7 +192,6 @@ def train_digit(n):
   bias = np.random.randint(low=-200, high=200, size=10)
 
   for epoch in range(epochs):
-    num_accurate = 0
     for _ in range(num_samples):
       
       # random idx from the training data
@@ -205,7 +204,7 @@ def train_digit(n):
       max_sum = 0
   
       # the loop which we'll use to find out the predicited digit (this digit is the one with the highest total_sum)
-      for digit in range(0, 9):
+      for digit in range(0, 10):
         total_sum = 0 
         for i in range(28):
           for j in range(28):
@@ -245,7 +244,7 @@ def train_digit(n):
       max_sum = 0
   
       # the loop which we'll use to find out the predicited digit (this digit is the one with the highest total_sum)
-      for digit in range(0, 9):
+      for digit in range(0, 10):
         total_sum = 0 
         for i in range(28):
           for j in range(28):
