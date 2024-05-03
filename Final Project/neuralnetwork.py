@@ -113,82 +113,78 @@ def sigmoid_activation(z):
 def sigmoid_derivative(output):
     return sigmoid_activation(output) * (1 - sigmoid_activation(output))
 
-def backpropagate(sample, predicted, actual, hidden_layer_values, output_weights, hidden_weights, output_bias, hidden_biases):
+def backpropagate(sample, predicted, actual, hidden_layer_values, output_weights, hidden_weights):
     # Calculate the error at the output layer
-    
-    output_error = (predicted - actual)
 
+    hidden_layer_values = np.array(hidden_layer_values)
     learning_rate = 0.01
+    error = predicted - actual
+    sample = sample.reshape(1, -1)
 
-    # Backpropagate the error to the hidden layer
-    output_weight_gradients = [output_error * hidden_layer_values[i] for i in range(1000)]
-    hidden_errors = [output_error * output_weights[i] for i in range(1000)]
+    # calculate the output gradient
+    output_gradient = hidden_layer_values * error
 
-    # Update output weights and bias
-    for i in range(1000):
-        output_weights[i] -= learning_rate * output_weight_gradients[i]
-    output_bias -= learning_rate * output_error
+    # calculate the hidden layer gradient
+    #print(output_weights.shape)
+    #print(hidden_layer_values.shape)
+    hidden_out = ((output_weights.T * error) * sigmoid_derivative(hidden_layer_values))
+    hidden_out = hidden_out.reshape((1000, 1))
+    hidden_gradient = hidden_out * sample
+    
+    # update the weights
+    output_weights -= learning_rate * output_gradient
+    hidden_weights -= learning_rate * hidden_gradient
 
-    # Update hidden weights and biases
-    for node in range(1000):
-        hidden_bias_gradient = hidden_errors[node] * sigmoid_derivative(hidden_layer_values[node])
-        hidden_biases[node] -= learning_rate * hidden_bias_gradient
+    #print(output_weights.shape)
+    
 
-        for i in range(70):
-            for j in range(60):
-                hidden_weight_gradient = hidden_errors[node] * sigmoid_derivative(hidden_layer_values[node]) * sample.getPixel(i, j)
-                hidden_weights[node][i][j] -= learning_rate * hidden_weight_gradient
+    return output_weights, hidden_weights
 
-    return output_weights, hidden_weights 
 def nn_face(n):
   
-  epochs = 1
+  epochs = 5
   data = loadDataFile('data/facedata/facedatatrain', 451, 60, 70)
   labels = loadLabelsFile('data/facedata/facedatatrainlabels', 451)
-  hidden_weights = np.random.uniform(low= -10, high= 10, size=(1000, 70, 60)) # we need different weights for each of the nodes on the hidden layer
-  output_weights = np.random.uniform(low= -10, high= 10, size= 1000)
-  hidden_biases = np.random.uniform(low=-10, high=10, size=1000)
-  output_bias = np.random.uniform(low = -10, high = 10, size = 1)
+  hidden_weights = np.random.uniform(low=-10, high=10, size=(1000, 4200))  # we need different weights for each of the nodes on the hidden layer
+  output_weights = np.random.uniform(low=-10, high=10, size=1000)
+  bias = 1
+
+
   num_samples = int(n * 451)
 
-    # when creating the neural network we need the following:
-        # the input layer (this layer will be the individual pixels of the image)
-        # the hidden layer (this layer will use the sigmoid function g(Z) = (1/(1 + e^-2)))
-        # the output layer (this layer is computed using sigmoid of each of the values computed in the hidden layer)
 
   for epoch in range(epochs):
-
     for _ in range(num_samples):
-      hidden_layer_values = [] 
+      
+      #print(f'Before Reset: {len(hidden_layer_values)}')
+      hidden_layer_values = []
 
       idx = np.random.randint(0, 451)
       sample = data[idx]
-      
+      sample = np.array(sample.getPixels()).flatten()
+
+      total_sum = 0
       for node in range(1000):
-        total_sum = 0
-        for i in range(70):
-          for j in range(60):
-              total_sum += hidden_weights[node][i][j] * sample.getPixel(i, j)
-
-        hidden_layer_values.append(sigmoid_activation(total_sum + hidden_biases[node]))    
-        
-      final_output = 0
-    
-      for i in range(1000):
-          final_output += output_weights[i] * hidden_layer_values[i]
-
-      predicted = sigmoid_activation(final_output + output_bias)
-
+          total_sum = np.dot(hidden_weights[node], sample) 
+          hidden_layer_values.append(sigmoid_activation(total_sum + bias))
+      
+      final_output = np.sum(output_weights * hidden_layer_values)
+      
+      predicted = sigmoid_activation(final_output + bias)
       actual = labels[idx]
 
-      print("About to backpropagate.")
-      if predicted > 0.5 and actual == 0:
-          output_weights, hidden_weights = backpropagate(sample, predicted, actual, hidden_layer_values, output_weights, hidden_weights, output_bias, hidden_biases)
-          #backprop(hidden_weights, output_weights, actual, predicted, sample, hidden_layer_values, learning_rate= 0.01)
-      elif predicted < 0.5 and actual == 1:
-          output_weights, hidden_weights= backpropagate(sample, predicted, actual, hidden_layer_values, output_weights, hidden_weights, output_bias, hidden_biases)          #backprop(hidden_weights, output_weights, actual, predicted, sample, hidden_layer_values, learning_rate= 0.01)
+      #print(len(hidden_layer_values))
+      #print(output_weights.shape)
 
-      print("Finished backpropagating.")
+      if predicted < 0.5 and actual == 1 :
+          #print("About to backpropagate.")
+          output_weights, hidden_weights = backpropagate(sample, predicted, actual, hidden_layer_values, output_weights, hidden_weights)
+          #print("Finished backpropagating.")
+      elif predicted > 0.5 and actual == 0:
+          #print("About to backpropagate.")
+          output_weights, hidden_weights= backpropagate(sample, predicted, actual, hidden_layer_values, output_weights, hidden_weights)
+          #print("Finished backpropagating.")          
+
   # now test the test data to see how accurate it is    
   data_test = loadDataFile('data/facedata/facedatavalidation', 301, 60, 70)
   labels_test = loadLabelsFile('data/facedata/facedatavalidationlabels', 301)
@@ -196,41 +192,30 @@ def nn_face(n):
   accuracies = []
 
   for idx in range(301):
-    hidden_layer_values = [] 
-    
-    sample = data_test[idx]
-    label = labels_test[idx]
-    total_sum = 0
+      hidden_layer_values = []
 
-    for node in range(1000):
-        total_sum = 0
-        for i in range(70):
-          for j in range(60):
-              total_sum += hidden_weights[node][i][j] * sample.getPixel(i, j)
+      sample = data_test[idx]
+      sample = np.array(sample.getPixels()).flatten()
 
-        hidden_layer_values.append(sigmoid_activation(total_sum + hidden_biases[node]))    
-        
-        final_output = 0
+      total_sum = 0
+      for node in range(1000):
+          total_sum = np.dot(hidden_weights[node], sample) 
+          hidden_layer_values.append(sigmoid_activation(total_sum + bias))
+      
+      final_output = np.sum(output_weights * hidden_layer_values)
+      
+      predicted = sigmoid_activation(final_output + bias)
+      actual = labels_test[idx]
 
-        #print(len(hidden_layer_values))
-        #print(len(output_weights))
+      if (predicted > 0.5 and actual == 1) or (predicted < 0.5 and actual == 0): 
+         accuracies.append(1)
+      else:
+         accuracies.append(0)
 
-        for i in range(len(hidden_layer_values)):
-            final_output += output_weights[i] * hidden_layer_values[i]
+  accuracy_mean = np.mean(accuracies)
+  accuracy_std = np.std(accuracies)
 
-        predicted = sigmoid_activation(final_output + output_bias)
-
-        actual = label
-
-        if (total_sum > 0.5 and label == 1):
-          accuracies.append(1)
-        elif (total_sum < 0.5 and label == 0):
-          accuracies.append(1)
-        else:
-          accuracies.append(0)
-  
-  #print(accuracies)
-  return np.mean(accuracies), np.std(accuracies)
+  return accuracy_mean, accuracy_std
 
 def nn_digit(n):
   
@@ -270,7 +255,7 @@ def nn_digit(n):
       
       
 def _test():
-  average, std = nn_face(.01)
+  average, std = nn_face(.1)
   print(average, std)
 
 if __name__ == "__main__":
