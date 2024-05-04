@@ -4,6 +4,7 @@ import util
 import numpy as np
 import zipfile
 import os
+import time
 
 ## Constants
 DATUM_WIDTH_FACE = 0 # in pixels
@@ -63,8 +64,7 @@ def loadDataFile(filename, n, width, height):
             print("Truncating at %d examples (maximum)" % i)
             break
         items.append(Perceptron(data, DATUM_WIDTH, DATUM_HEIGHT))
-        count = + 1
-    print(count)
+        count =+ 1
     return items
 
 
@@ -193,7 +193,7 @@ def train_face(n):
 # Move validation loop in epoch loop
 def train_digit(n):
   
-  epochs = 5
+  epochs = 10
   data = loadDataFile('data/digitdata/trainingimages', 5000, 28, 28)
   labels = loadLabelsFile('data/digitdata/traininglabels', 5000)
   weights = np.random.randint(low=-400, high=400, size=(10, 28, 28))
@@ -265,8 +265,20 @@ def train_digit(n):
 
 # Testing
 def _test():
-  average, std = train_digit(.1)
-  print(average, std)
+  averages, stds, times = [], [], []
+
+  values = [i / 10 for i in range(1, 11)]
+
+  for value in values:
+    start_time = time.time()
+    average, std = train_digit(value)
+    averages.append(average)
+    stds.append(std)
+    times.append(time.time() - start_time)
+
+  print(averages)
+  print(stds)  
+  print(times)
 
 if __name__ == "__main__":
   _test()  

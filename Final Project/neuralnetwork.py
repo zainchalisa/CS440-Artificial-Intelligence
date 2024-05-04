@@ -3,6 +3,7 @@ import numpy as np
 import zipfile
 import os
 import math
+import time
 
 ## Constants
 DATUM_WIDTH_FACE = 0 # in pixels
@@ -63,7 +64,6 @@ def loadDataFile(filename, n, width, height):
             break
         items.append(Neural_Network(data, DATUM_WIDTH, DATUM_HEIGHT))
         count = + 1
-    print(count)
     return items
 
 
@@ -249,7 +249,7 @@ def nn_face(n):
 
 def nn_digit(n):
   
-  epochs = 5
+  epochs = 10
   data = loadDataFile('data/digitdata/trainingimages', 451, 28, 28)
   labels = loadLabelsFile('data/digitdata/traininglabels', 451)
   hidden_weights = np.random.uniform(low=-5, high=5, size=(256, 784))  # we need different weights for each of the nodes on the hidden layer
@@ -341,8 +341,20 @@ def nn_digit(n):
       
       
 def _test():
-  average, std = nn_digit(.1)
-  print(average, std)
+ averages, stds, times = [], [], []
+
+ values = [i / 10 for i in range(1, 11)]
+
+ for value in values:
+  start_time = time.time()
+  average, std = nn_face(value)
+  averages.append(average)
+  stds.append(std)
+  times.append(time.time() - start_time)
+
+ print(averages)
+ print(stds)  
+ print(times)
 
 if __name__ == "__main__":
   _test()  
