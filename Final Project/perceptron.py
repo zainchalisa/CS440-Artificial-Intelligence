@@ -111,21 +111,29 @@ def convertToInteger(data):
 # function used to train the data and get the final weights which will be used on the actual data  
 def train_face(n):
 
-  epochs = 10
+  epochs = 5
   data = loadDataFile('data/facedata/facedatatrain', 451, 60, 70)
   labels = loadLabelsFile('data/facedata/facedatatrainlabels', 451)
-  weights = np.random.randint(low= -400, high= 400, size=(70, 60))
+  weights = np.random.uniform(low= -1, high= 1, size=(70, 60))
   num_samples = int(n * 451)
 
-  accuracies = []
+  final_accuracies = []
+  final_std = []
 
-  bias = np.random.randint(low = -200, high = 200)
+  bias = np.random.uniform(low = -1, high = 1)
 
  
   for epoch in range(epochs):
+    images_used = set()
     for _ in range(num_samples):
 
       idx = np.random.randint(0, 451)
+
+      while idx in images_used:
+        idx = np.random.randint(0, 451)
+
+      images_used.add(idx)
+
       sample = data[idx]
       
       total_sum = bias
@@ -151,128 +159,113 @@ def train_face(n):
 
   ############## END OF TRAINING MODEL CODE FOR FACE ###################            
       
-  # now test the test data to see how accurate it is    
-  data_test = loadDataFile('data/facedata/facedatavalidation', 301, 60, 70)
-  labels_test = loadLabelsFile('data/facedata/facedatavalidationlabels', 301)
+    # now test the test data to see how accurate it is    
+    data_test = loadDataFile('data/facedata/facedatavalidation', 301, 60, 70)
+    labels_test = loadLabelsFile('data/facedata/facedatavalidationlabels', 301)
+    
+    accuracies = []
+
+    for idx in range(301):
+
+      sample = data_test[idx]
+      label = labels_test[idx]
+      total_sum = 0
+
+      for i in range(70):
+        for j in range(60):
+          total_sum += sample.getPixel(i, j) * weights[i][j] 
+          #print(f'Pixel{sample.getPixel(i, j)}, Weight{weights[i][j]}')
+
+      total_sum += bias
+
+      if (total_sum > 0 and label == 1):
+        accuracies.append(1)
+      elif (total_sum < 0 and label == 0):
+        accuracies.append(1)
+      else:
+        accuracies.append(0)
+
+    final_accuracies.append(np.average(accuracies))
+    final_std.append(np.std(accuracies))  
   
-  for idx in range(301):
-
-    sample = data_test[idx]
-    label = labels_test[idx]
-    total_sum = 0
-
-    for i in range(70):
-      for j in range(60):
-        total_sum += sample.getPixel(i, j) * weights[i][j] 
-        #print(f'Pixel{sample.getPixel(i, j)}, Weight{weights[i][j]}')
-
-    total_sum += bias
-
-    if (total_sum > 0 and label == 1):
-      accuracies.append(1)
-    elif (total_sum < 0 and label == 0):
-      accuracies.append(1)
-    else:
-      accuracies.append(0)
-  
-  #print(accuracies)
-  return np.mean(accuracies), np.std(accuracies)
+  return np.average(final_accuracies), np.std(final_std)  
 
 # Move validation loop in epoch loop
 def train_digit(n):
-
-  epochs = 10
+  
+  epochs = 5
   data = loadDataFile('data/digitdata/trainingimages', 5000, 28, 28)
   labels = loadLabelsFile('data/digitdata/traininglabels', 5000)
   weights = np.random.randint(low=-400, high=400, size=(10, 28, 28))
   num_samples = int(n * 5000)
-
   accuracies = []
-
+  
+  final_accuracies = []
+  final_std = []
   bias = np.random.randint(low=-200, high=200, size=10)
 
   for epoch in range(epochs):
+    images_used = set()
     for _ in range(num_samples):
       
       # random idx from the training data
       idx = np.random.randint(0, 5000)
+      
+      while idx in images_used:
+        idx = np.random.randint(0, 5000)
+      
+      images_used.add(idx)
 
       # the image at that index in the training data
-      image = data[idx]
+      image = np.array(data[idx].getPixels())
 
-      predicted_digit = 0
-      max_sum = 0
-  
-      # the loop which we'll use to find out the predicited digit (this digit is the one with the highest total_sum)
-      for digit in range(0, 10):
-        total_sum = 0 
-        for i in range(28):
-          for j in range(28):
-            total_sum += image.getPixel(i, j) * weights[digit][i][j]
-        
-        # adds the bias value associated to the current digit to the total sum
-        total_sum += bias[digit]
+      # Compute the total sum for each digit using NumPy vectorization
+      total_sums = np.sum(weights * image, axis=(1, 2)) + bias
 
-        # checks if we need to update the max_sum and predicted_digit
-        if total_sum > max_sum:
-          max_sum = total_sum
-          predicted_digit = digit
-
-      # gets the actual digit which the image represents 
+      # Get the predicted digit and the actual digit
+      predicted_digit = np.argmax(total_sums)
       real_digit = labels[idx]
 
-      # checks to see if our prediction is accurate or not, if not we will update the weights and bias
+      # Update weights and bias if prediction is incorrect
       if predicted_digit != real_digit:
         bias[predicted_digit] -= 1
         bias[real_digit] += 1
-        for i in range(28):
-          for j in range(28):
-            weights[predicted_digit][i][j] = weights[predicted_digit][i][j] - image.getPixel(i, j)
-            weights[real_digit][i][j] =  weights[real_digit][i][j] + image.getPixel(i, j)
+        weights[predicted_digit] -= image
+        weights[real_digit] += image
 
-  ############## END OF TRAINING MODEL CODE FOR DIGIT ################### 
+############## END OF TRAINING MODEL CODE FOR DIGIT ################### 
 
   # now test the test data to see how accurate it is    
-  data_test = loadDataFile('data/digitdata/validationimages', 1000, 28, 28)
-  labels_test = loadLabelsFile('data/digitdata/validationlabels', 1000)
-  
-  for idx in range(1000):
+    data_test = loadDataFile('data/digitdata/validationimages', 1000, 28, 28)
+    labels_test = loadLabelsFile('data/digitdata/validationlabels', 1000)
 
-      image = data_test[idx]
+    accuracies = []
+    
+    for idx in range(1000):
 
-      predicted_digit = 0
-      max_sum = 0
-  
-      # the loop which we'll use to find out the predicited digit (this digit is the one with the highest total_sum)
-      for digit in range(0, 10):
-        total_sum = 0 
-        for i in range(28):
-          for j in range(28):
-            total_sum += image.getPixel(i, j) * weights[digit][i][j]
-        
-        # adds the bias value associated to the current digit to the total sum
-        total_sum += bias[digit]
+        image = np.array(data_test[idx].getPixels())
 
-        # checks if we need to update the max_sum and predicted_digit
-        if total_sum > max_sum:
-          max_sum = total_sum
-          predicted_digit = digit
+        # Compute the total sum for each digit using NumPy vectorization
+        total_sums = np.sum(weights * image, axis=(1, 2)) + bias
 
-      # gets the actual digit which the image represents 
-      real_digit = labels_test[idx]
+        # Get the predicted digit and the actual digit
+        predicted_digit = np.argmax(total_sums)
+        real_digit = labels_test[idx]
 
-      if real_digit == predicted_digit:
-        accuracies.append(1)
-      else:
-        accuracies.append(0)
+        if real_digit == predicted_digit:
+          accuracies.append(1)
+        else:
+          accuracies.append(0)
+
+    final_accuracies.append(np.average(accuracies))
+    final_std.append(np.std(accuracies))   
      
-
-  return np.average(accuracies), np.std(accuracies)  
+  return np.average(final_accuracies), np.std(final_std)  
 
 
 # Testing
 def _test():
-  average, std = train_digit(1)
+  average, std = train_digit(.1)
   print(average, std)
 
 if __name__ == "__main__":

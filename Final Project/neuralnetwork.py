@@ -175,13 +175,22 @@ def nn_face(n):
 
   num_samples = int(n * 451)
 
+  final_accuracies = []
+  final_std = []
+
 
   for epoch in range(epochs):
+    images_used = set()
     for _ in range(num_samples):
       
       hidden_layer_values = []
 
       idx = np.random.randint(0, 451)
+
+      while idx in images_used:
+        idx = np.random.randint(0, 451)
+
+      images_used.add(idx)
       sample = data[idx]
       sample = np.array(sample.getPixels()).flatten()
 
@@ -205,40 +214,42 @@ def nn_face(n):
           #print("Finished backpropagating.")          
 
   # now test the test data to see how accurate it is    
-  data_test = loadDataFile('data/facedata/facedatavalidation', 301, 60, 70)
-  labels_test = loadLabelsFile('data/facedata/facedatavalidationlabels', 301)
-  
-  accuracies = []
+    data_test = loadDataFile('data/facedata/facedatavalidation', 301, 60, 70)
+    labels_test = loadLabelsFile('data/facedata/facedatavalidationlabels', 301)
+    
+    accuracies = []
 
-  for idx in range(301):
-      hidden_layer_values = []
+    for idx in range(301):
+        hidden_layer_values = []
 
-      sample = data_test[idx]
-      sample = np.array(sample.getPixels()).flatten()
+        sample = data_test[idx]
 
-      total_sum = 0
-      for node in range(1000):
-          total_sum = np.dot(hidden_weights[node], sample) 
-          hidden_layer_values.append(sigmoid_activation(total_sum + bias))
-      
-      final_output = np.sum(output_weights * hidden_layer_values)
-      
-      predicted = sigmoid_activation(final_output + bias)
-      actual = labels_test[idx]
 
-      if (predicted > 0.5 and actual == 1) or (predicted < 0.5 and actual == 0): 
-         accuracies.append(1)
-      else:
-         accuracies.append(0)
+        sample = np.array(sample.getPixels()).flatten()
 
-  accuracy_mean = np.mean(accuracies)
-  accuracy_std = np.std(accuracies)
+        total_sum = 0
+        for node in range(1000):
+            total_sum = np.dot(hidden_weights[node], sample) 
+            hidden_layer_values.append(sigmoid_activation(total_sum + bias))
+        
+        final_output = np.sum(output_weights * hidden_layer_values)
+        
+        predicted = sigmoid_activation(final_output + bias)
+        actual = labels_test[idx]
 
-  return accuracy_mean, accuracy_std
+        if (predicted > 0.5 and actual == 1) or (predicted < 0.5 and actual == 0): 
+          accuracies.append(1)
+        else:
+          accuracies.append(0)
+
+    final_accuracies.append(np.average(accuracies))
+    final_std.append(np.std(accuracies))
+
+  return np.average(final_accuracies), np.std(final_std)  
 
 def nn_digit(n):
   
-  epochs = 10
+  epochs = 5
   data = loadDataFile('data/digitdata/trainingimages', 451, 28, 28)
   labels = loadLabelsFile('data/digitdata/traininglabels', 451)
   hidden_weights = np.random.uniform(low=-5, high=5, size=(256, 784))  # we need different weights for each of the nodes on the hidden layer
@@ -248,14 +259,24 @@ def nn_digit(n):
 
   num_samples = int(n * 451)
 
-  for epoch in range(epochs):
-    for _ in range(num_samples):
+  final_accuracies = []
+  final_std = []
 
+  for epoch in range(epochs):
+    images_used = set()
+    for _ in range(num_samples):
+      
       hidden_layer_values = [] 
       predicted_arr = np.zeros(10)
       actual_arr = np.zeros(10)
       
       idx = np.random.randint(0, 451)
+
+      while idx in images_used:
+        idx = np.random.randint(0, 451)
+
+      images_used.add(idx)
+
       sample = data[idx]
       sample = np.array(sample.getPixels()).flatten()
 
@@ -278,46 +299,49 @@ def nn_digit(n):
          output_weights, hidden_weights= backpropagate_digit(sample, predicted_arr, actual_arr, hidden_layer_values, output_weights, hidden_weights)
 
 
-  data_test = loadDataFile('data/digitdata/validationimages', 1000, 28, 28)
-  labels_test = loadLabelsFile('data/digitdata/validationlabels', 1000)
+    data_test = loadDataFile('data/digitdata/validationimages', 1000, 28, 28)
+    labels_test = loadLabelsFile('data/digitdata/validationlabels', 1000)
 
-  accuracies = []
-  
-  for idx in range(1000):
+    accuracies = []
+    
+    for idx in range(1000):
 
-      hidden_layer_values = [] 
-      predicted_arr = np.zeros(10)
-      actual_arr = np.zeros(10)
-      
-      idx = np.random.randint(0, 451)
-      sample = data[idx]
-      sample = np.array(sample.getPixels()).flatten()
+        hidden_layer_values = [] 
+        predicted_arr = np.zeros(10)
+        actual_arr = np.zeros(10)
+        
+        idx = np.random.randint(0, 451)
+        sample = data[idx]
+        sample = np.array(sample.getPixels()).flatten()
 
-      for node in range(256):
-        total_sum = np.dot(hidden_weights[node], sample) 
-        hidden_layer_values.append(sigmoid_activation(total_sum + bias))
+        for node in range(256):
+          total_sum = np.dot(hidden_weights[node], sample) 
+          hidden_layer_values.append(sigmoid_activation(total_sum + bias))
 
-      for digit in range(10):
-        final_output = sigmoid_activation(np.sum(output_weights[digit] * hidden_layer_values))
-        predicted_arr[digit] = final_output
+        for digit in range(10):
+          final_output = sigmoid_activation(np.sum(output_weights[digit] * hidden_layer_values))
+          predicted_arr[digit] = final_output
 
-      actual_digit = labels[idx]
-      actual_arr[actual_digit] = 1
+        actual_digit = labels[idx]
+        actual_arr[actual_digit] = 1
 
-      predicted_digit =  np.argmax(predicted_arr)
+        predicted_digit =  np.argmax(predicted_arr)
 
-      if predicted_digit == actual_digit:
-        accuracies.append(1)
-      else:
-         accuracies.append(0)
+        if predicted_digit == actual_digit:
+          accuracies.append(1)
+        else:
+          accuracies.append(0)
 
-  return np.average(accuracies), np.std(accuracies)  
+    final_accuracies.append(np.average(accuracies))
+    final_std.append(np.std(accuracies))
+
+  return np.average(final_accuracies), np.std(final_std)  
 
         
       
       
 def _test():
-  average, std = nn_digit(.5)
+  average, std = nn_digit(.1)
   print(average, std)
 
 if __name__ == "__main__":
