@@ -111,7 +111,7 @@ def convertToInteger(data):
 # function used to train the data and get the final weights which will be used on the actual data  
 def train_face(n):
 
-  epochs = 5
+  epochs = 10
   data = loadDataFile('data/facedata/facedatatrain', 451, 60, 70)
   labels = loadLabelsFile('data/facedata/facedatatrainlabels', 451)
   weights = np.random.uniform(low= -1, high= 1, size=(70, 60))
@@ -130,32 +130,22 @@ def train_face(n):
       idx = np.random.randint(0, 451)
 
       while idx in images_used:
-        idx = np.random.randint(0, 451)
+          idx = np.random.randint(0, 451)
 
       images_used.add(idx)
+      sample = data[idx].getPixels()
 
-      sample = data[idx]
-      
-      total_sum = bias
-
-      for i in range(70):
-        for j in range(60):
-          total_sum += sample.getPixel(i, j) + weights[i][j] 
+      total_sum = bias + np.sum(sample * weights)
 
       label = labels[idx]
 
       if total_sum > 0 and label == 0:
-        bias -= 1
-        for i in range(70):
-          for j in range(60):
-            weights[i][j] = weights[i][j] - sample.getPixel(i, j) 
-        
-      # Predicted output is not a face, but actual output is a face
+          bias -= 1
+          weights -= sample
+
       elif total_sum < 0 and label == 1:
-        bias += 1
-        for i in range(70):
-          for j in range(60):
-            weights[i][j] =  weights[i][j] + sample.getPixel(i, j) 
+          bias += 1
+          weights += sample
 
   ############## END OF TRAINING MODEL CODE FOR FACE ###################            
       
@@ -167,16 +157,11 @@ def train_face(n):
 
     for idx in range(301):
 
-      sample = data_test[idx]
+      sample = data_test[idx].getPixels()
+
+      total_sum = bias + np.sum(sample * weights)
+
       label = labels_test[idx]
-      total_sum = 0
-
-      for i in range(70):
-        for j in range(60):
-          total_sum += sample.getPixel(i, j) * weights[i][j] 
-          #print(f'Pixel{sample.getPixel(i, j)}, Weight{weights[i][j]}')
-
-      total_sum += bias
 
       if (total_sum > 0 and label == 1):
         accuracies.append(1)
@@ -265,13 +250,14 @@ def train_digit(n):
 
 # Testing
 def _test():
+
   averages, stds, times = [], [], []
 
   values = [i / 10 for i in range(1, 11)]
 
   for value in values:
     start_time = time.time()
-    average, std = train_digit(value)
+    average, std = train_face(value)
     averages.append(average)
     stds.append(std)
     times.append(time.time() - start_time)

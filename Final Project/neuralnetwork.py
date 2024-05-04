@@ -165,11 +165,11 @@ def backpropagate_digit(sample, predicted, actual, hidden_layer_values, output_w
 
 def nn_face(n):
   
-  epochs = 5
+  epochs = 10
   data = loadDataFile('data/facedata/facedatatrain', 451, 60, 70)
   labels = loadLabelsFile('data/facedata/facedatatrainlabels', 451)
-  hidden_weights = np.random.uniform(low=-10, high=10, size=(1000, 4200))  # we need different weights for each of the nodes on the hidden layer
-  output_weights = np.random.uniform(low=-10, high=10, size=1000)
+  hidden_weights = np.random.uniform(low=-1, high=1, size=(1000, 4200))  # we need different weights for each of the nodes on the hidden layer
+  output_weights = np.random.uniform(low=-1, high=1, size=1000)
   bias = 1
 
 
@@ -178,8 +178,8 @@ def nn_face(n):
   final_accuracies = []
   final_std = []
 
-
   for epoch in range(epochs):
+    
     images_used = set()
     for _ in range(num_samples):
       
@@ -319,7 +319,7 @@ def nn_digit(n):
           hidden_layer_values.append(sigmoid_activation(total_sum + bias))
 
         for digit in range(10):
-          final_output = sigmoid_activation(np.sum(output_weights[digit] * hidden_layer_values))
+          final_output = sigmoid_activation(np.sum(output_weights[digit] * hidden_layer_values) + bias)
           predicted_arr[digit] = final_output
 
         actual_digit = labels[idx]
@@ -331,7 +331,7 @@ def nn_digit(n):
           accuracies.append(1)
         else:
           accuracies.append(0)
-
+    
     final_accuracies.append(np.average(accuracies))
     final_std.append(np.std(accuracies))
 
@@ -341,6 +341,7 @@ def nn_digit(n):
       
       
 def _test():
+ 
  averages, stds, times = [], [], []
 
  values = [i / 10 for i in range(1, 11)]
@@ -355,6 +356,7 @@ def _test():
  print(averages)
  print(stds)  
  print(times)
+ 
 
 if __name__ == "__main__":
   _test()  
