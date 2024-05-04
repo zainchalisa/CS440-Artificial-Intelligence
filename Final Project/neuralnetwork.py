@@ -124,9 +124,7 @@ def backpropagate(sample, predicted, actual, hidden_layer_values, output_weights
     # calculate the output gradient
     output_gradient = hidden_layer_values * error
 
-    # calculate the hidden layer gradient
-    #print(output_weights.shape)
-    #print(hidden_layer_values.shape)
+
     hidden_out = ((output_weights.T * error) * sigmoid_derivative(hidden_layer_values))
     hidden_out = hidden_out.reshape((1000, 1))
     hidden_gradient = hidden_out * sample
@@ -134,8 +132,33 @@ def backpropagate(sample, predicted, actual, hidden_layer_values, output_weights
     # update the weights
     output_weights -= learning_rate * output_gradient
     hidden_weights -= learning_rate * hidden_gradient
+    
 
-    #print(output_weights.shape)
+    return output_weights, hidden_weights
+
+def backpropagate_digit(sample, predicted, actual, hidden_layer_values, output_weights, hidden_weights):
+    # Calculate the error at the output layer
+
+    hidden_layer_values = np.array(hidden_layer_values)
+    hidden_layer_values = hidden_layer_values.reshape(256, 1)
+    learning_rate = 0.01
+    error = predicted - actual
+    error = error.reshape(1, 10)
+    sample = sample.reshape(1, -1)
+
+    
+    # calculate the output gradient
+    output_gradient = hidden_layer_values * error
+
+    #calculate the hidden gradient
+    error = error.reshape(10, 1)
+    hidden_out = (np.dot(output_weights.T , error) * sigmoid_derivative(hidden_layer_values))
+    hidden_gradient = hidden_out * sample
+
+    
+    # update the weights
+    output_weights -= learning_rate * output_gradient.reshape((10, 256))
+    hidden_weights -= learning_rate * hidden_gradient
     
 
     return output_weights, hidden_weights
@@ -156,7 +179,6 @@ def nn_face(n):
   for epoch in range(epochs):
     for _ in range(num_samples):
       
-      #print(f'Before Reset: {len(hidden_layer_values)}')
       hidden_layer_values = []
 
       idx = np.random.randint(0, 451)
@@ -172,9 +194,6 @@ def nn_face(n):
       
       predicted = sigmoid_activation(final_output + bias)
       actual = labels[idx]
-
-      #print(len(hidden_layer_values))
-      #print(output_weights.shape)
 
       if predicted < 0.5 and actual == 1 :
           #print("About to backpropagate.")
@@ -222,40 +241,83 @@ def nn_digit(n):
   epochs = 10
   data = loadDataFile('data/digitdata/trainingimages', 451, 28, 28)
   labels = loadLabelsFile('data/digitdata/traininglabels', 451)
-  hidden_weights = np.random.randint(low= -400, high= 400, size=(256, 28, 28)) # we need different weights for each of the nodes on the hidden layer
-  output_weights = np.random.randint(low= -400, high= 400, size=(10, 256))
-  hidden_biases = np.random.randint(low=-200, high=200, size=256)
-  output_biases = np.random.randint(low = -200, high = 200, size = 10)
-  hidden_layer_values = [] 
+  hidden_weights = np.random.uniform(low=-5, high=5, size=(256, 784))  # we need different weights for each of the nodes on the hidden layer
+  output_weights = np.random.uniform(low=-5, high=5, size=(10, 256))
+  output_weights = output_weights.reshape((10, 256))
+  bias = 1
+
   num_samples = int(n * 451)
 
-    # when creating the neural network we need the following:
-        # the input layer (this layer will be the individual pixels of the image)
-        # the hidden layer (this layer will use the sigmoid function g(Z) = (1/(1 + e^-2)))
-        # the output layer (this layer is computed using sigmoid of each of the values computed in the hidden layer)
-
   for epoch in range(epochs):
+    for _ in range(num_samples):
 
-    for _ in num_samples:
+      hidden_layer_values = [] 
+      predicted_arr = np.zeros(10)
+      actual_arr = np.zeros(10)
       
       idx = np.random.randint(0, 451)
       sample = data[idx]
-      
+      sample = np.array(sample.getPixels()).flatten()
+
       for node in range(256):
-        total_sum = 0
-        for i in range(28):
-          for j in range(28):
-              total_sum += hidden_weights[node][i][j] * sample.getPixel(i, j)
+        total_sum = np.dot(hidden_weights[node], sample) 
+        hidden_layer_values.append(sigmoid_activation(total_sum + bias))
 
-        hidden_layer_values.append(sigmoid_activation(total_sum + hidden_biases[node]))    
+      for digit in range(10):
+        output_arr = (output_weights[digit] * hidden_layer_values)
+        sum_arr = np.sum(output_arr)
+        final_output = sigmoid_activation(sum_arr)
+        predicted_arr[digit] = final_output
+
+      actual_digit = labels[idx]
+      actual_arr[actual_digit] = 1
+
+      predicted_digit =  np.argmax(predicted_arr)
+
+      if predicted_digit != actual_digit:
+         output_weights, hidden_weights= backpropagate_digit(sample, predicted_arr, actual_arr, hidden_layer_values, output_weights, hidden_weights)
+
+
+  data_test = loadDataFile('data/digitdata/validationimages', 1000, 28, 28)
+  labels_test = loadLabelsFile('data/digitdata/validationlabels', 1000)
+
+  accuracies = []
+  
+  for idx in range(1000):
+
+      hidden_layer_values = [] 
+      predicted_arr = np.zeros(10)
+      actual_arr = np.zeros(10)
+      
+      idx = np.random.randint(0, 451)
+      sample = data[idx]
+      sample = np.array(sample.getPixels()).flatten()
+
+      for node in range(256):
+        total_sum = np.dot(hidden_weights[node], sample) 
+        hidden_layer_values.append(sigmoid_activation(total_sum + bias))
+
+      for digit in range(10):
+        final_output = sigmoid_activation(np.sum(output_weights[digit] * hidden_layer_values))
+        predicted_arr[digit] = final_output
+
+      actual_digit = labels[idx]
+      actual_arr[actual_digit] = 1
+
+      predicted_digit =  np.argmax(predicted_arr)
+
+      if predicted_digit == actual_digit:
+        accuracies.append(1)
+      else:
+         accuracies.append(0)
+
+  return np.average(accuracies), np.std(accuracies)  
+
         
-
-      final_output = np.dot(output_weights, hidden_layer_values) + output_biases
-      digit_predicted = np.argmax(final_output)
       
       
 def _test():
-  average, std = nn_face(.1)
+  average, std = nn_digit(.5)
   print(average, std)
 
 if __name__ == "__main__":
